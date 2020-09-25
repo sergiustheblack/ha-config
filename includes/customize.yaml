@@ -1,0 +1,18 @@
+# Ванная
+# Relay Aqara LLKZMK11LM
+sensor.da_2ch_relay_consumption:
+  friendly_name: Aqara Ванная LKZMK11LM расход
+  unit_of_measurement: 'КВт/ч'
+sensor.da_2ch_relay_linkquality:
+  friendly_name: Aqara Ванная LKZMK11LM сигнал
+sensor.da_2ch_relay_power:
+  friendly_name: Aqara Ванная LKZMK11LM потребление
+  unit_of_measurement: 'Вт'
+switch.da_2ch_relay_switch_l1:
+  friendly_name: Aqara Ванная LKZMK11LM Светильник
+switch.da_2ch_relay_switch_l2:
+  friendly_name: Aqara Ванная LKZMK11LM 2
+sensor.da_2ch_relay_temperature:
+  friendly_name: Aqara Ванная LKZMK11LM температура
+
+

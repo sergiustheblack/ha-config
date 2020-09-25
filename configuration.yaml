@@ -1,0 +1,46 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+
+homeassistant:
+  name: Kitty's home
+  latitude: !secret latitude_coord
+  longitude: !secret longitude_coord
+  elevation: 130
+  unit_system: metric
+  time_zone: Europe/Moscow
+  customize: !include customize.yaml
+  packages: !include_dir_merge_named includes/packages
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+http:
+  trusted_proxies: 
+    - 127.0.0.1
+  server_port: 8123
+  use_x_forwarded_for: true
+
+mqtt:
+  broker: core-mosquitto
+  discovery: true
+  discovery_prefix: homeassistant
+  username: mqtt
+  password: "l8q87rq387yr387"
+  
+lovelace:
+  mode: yaml
+
+group: !include groups.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# ext files
+timer: !include includes/timer.yaml
+input_boolean: !include includes/input_boolean.yaml
+
+# ext dirs
+sensor: !include_dir_merge_list includes/sensor
+automation: !include_dir_merge_list includes/automation
