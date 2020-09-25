@@ -1,0 +1,24 @@
+  - title: Погода
+    icon: mdi:home
+    panel: true
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: weather-forecast
+                entity: weather.kitty_s_house
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                show_header_toggle: false
+                entities:
+                  - entity: sensor.time
+                    name: Текущее время
+                    icon: mdi:clock-outline
+                  - entity: sensor.date
+                    name: Дата
+                    icon: mdi:calendar-check-outline
+                  - entity: sensor.last_boot
+                    name: Время работы
+                    icon: mdi:clock-check-outline
