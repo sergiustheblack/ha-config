@@ -1,0 +1,8 @@
+  - alias: bathroom_toogle_light_mirror
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.bathroom_mirror_switch_action
+    action:
+      - service: switch.toggle
+        entity_id: switch.bathroom_light1

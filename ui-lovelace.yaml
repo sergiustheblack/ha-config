@@ -1,2 +1,2 @@
 title: Кошкин дом
-views: !include_dir_merge_list config/lovelace/views
+views: !include_dir_merge_list includes/lovelace/views

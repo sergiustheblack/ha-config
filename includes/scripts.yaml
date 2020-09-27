@@ -1,0 +1,9 @@
+bathroom_toggle_mirror_light:
+  alias: Включить светильник в ванной
+  sequence:
+  - type: toggle
+    device_id: 19d8adf9fc3811eaa7d35bfa261b2170
+    entity_id: switch.bathroom_light1
+    domain: switch
+  mode: single
+  icon: mdi:mirror

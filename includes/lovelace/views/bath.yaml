@@ -1,0 +1,9 @@
+  - title: Ванна
+    icon: mdi:toilet
+    panel: false
+    cards:
+      - type: entities
+        entities:
+          - sensor.bathroom_relay_consumption
+          - sensor.bathroom_relay_power
+          - switch.bathroom_light1
