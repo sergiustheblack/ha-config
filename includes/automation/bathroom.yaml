@@ -1,8 +1,55 @@
-  - alias: bathroom_toogle_light_mirror
+  - alias: bathroom_toggle_light_mirror
     initial_state: true
     trigger:
       - platform: state
         entity_id: sensor.bathroom_mirror_switch_action
+        to: 'single' 
     action:
       - service: switch.toggle
         entity_id: switch.bathroom_light1
+
+  - alias: bathroom_start_timer
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: switch.bathroom_light1
+        to: 'on'
+        from: 'off'
+    action:
+      - service: timer.start
+        entity_id: timer.bathroom_light_mirror
+        
+  - alias: bathroom_stop_timer
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: switch.bathroom_light1
+        to: 'off'
+        from: 'on'
+    condition:
+      - condition: state
+        entity_id: timer.bathroom_light_mirror
+        state: 'active'
+    action:
+      - service: timer.cancel
+        entity_id: timer.bathroom_light_mirror
+        
+  - alias: bathroom_light_mirror_timer_off
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.bathroom_light_mirror
+    condition:
+      - condition: state
+        entity_id: switch.bathroom_light1
+        state: 'on'
+    action:
+      - service: switch.turn_off
+        entity_id: switch.bathroom_light1
+        
+        
+        
+        
+        

@@ -48,3 +48,13 @@
                 red: 2
                 yellow: 6
                 green: 8
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: history-graph
+                entities:
+                  - sensor.cpu_temperature
+                hours_to_show: 24
+                refresh_interval: 120
+                title: Cpu Temperature

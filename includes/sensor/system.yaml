@@ -13,3 +13,10 @@
     - type: last_boot
     - type: disk_free
       arg: /
+  - platform: command_line
+    command: 'cat /sys/class/thermal/thermal_zone0/temp'
+    name: CPU temperature
+    unit_of_measurement: "C"
+    scan_interval: 120
+    value_template: '{{ value | multiply(0.001) | round(2) }}'
+
