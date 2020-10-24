@@ -1,0 +1,7 @@
+  test_input:
+    name: Set timer
+    initial: 30
+    min: 0
+    max: 12000
+    step: 1
+    mode: box

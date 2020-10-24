@@ -48,6 +48,41 @@
                 red: 2
                 yellow: 6
                 green: 8
+        # UPS
+        - type: horizontal-stack
+          cards: 
+            - type: entities
+              entities:
+                - entity: sensor.ups_status
+                  name: Status
+                - entity: sensor.ups_input_voltage
+                  name: Input Voltage
+                - entity: sensor.ups_time_left
+                  name: Battery Runtime
+              theme: default
+              title: APC UPS STATUS 
+              
+        - type: horizontal-stack
+          cards: 
+            - type: gauge
+              entity: sensor.ups_battery
+              max: 100
+              min: 0
+              name: Зарядка
+              severity:
+                green: 0
+                red: -80
+                yellow: -30 
+            - type: gauge
+              entity: sensor.ups_load
+              max: 100
+              min: 0
+              name: Нагрузка
+              severity:
+                green: 0
+                red: 90
+                yellow: 70
+        # END UPS
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -58,3 +93,8 @@
                 hours_to_show: 24
                 refresh_interval: 120
                 title: Cpu Temperature
+              - type: entities
+                entities:
+                  - input_boolean.test_input
+                  - input_number.test_input
+                  - timer.test_timer

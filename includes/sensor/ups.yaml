@@ -1,0 +1,23 @@
+# UPS
+  - platform: apcupsd
+    resources:
+      - apc
+      - hostname
+      - version
+      - upsname
+      - cable
+      - driver
+      - upsmode
+      - starttime
+      - model
+      - status
+      - linev
+      - loadpct
+      - bcharge
+      - timeleft
+      - mbattchg
+      - mintimel
+      - maxtime
+      - maxlinev
+      - minlinev
+      - outputv

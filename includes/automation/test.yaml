@@ -1,0 +1,11 @@
+  - alias: test_timer on
+    trigger:
+      platform: state
+      entity_id: input_boolean.test_input
+      to: 'on'
+    action:
+      service: timer.start
+      entity_id: timer.test_timer
+      data_template:
+        duration: "{{ states('input_number.test_input') | int }}"
+

@@ -32,9 +32,14 @@ mqtt:
 lovelace:
   mode: yaml
 
+apcupsd:
+  host: a722577e-apcupsd
+  port: 3551
+  
 # ext files
 timer: !include includes/timer.yaml
 input_boolean: !include includes/input_boolean.yaml
+input_number: !include includes/input_number.yaml
 group: !include includes/groups.yaml
 script: !include includes/scripts.yaml
 scene: !include includes/scenes.yaml

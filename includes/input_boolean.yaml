@@ -2,3 +2,6 @@
     name: Allow devices to join
     initial: off
     icon: mdi:cellphone-wireless
+  test_input:
+    name: test switch
+    initial: off
