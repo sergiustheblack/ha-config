@@ -12,12 +12,12 @@ switch.bathroom_relay_switch_l2:
   friendly_name: Aqara Ванная LKZMK11LM 2
 sensor.bathroom_relay_temperature:
   friendly_name: Aqara Ванная LKZMK11LM температура
-switch.bathroom_light1:
+switch.bathroom_light_mirror:
   friendly_name: Ванная Светильник
   icon: mdi:mirror
 
 # Aqara D1 single key wireless wall switch (WXKG06LM)
-sensor.bathroom_mirror_switch_action:
+sensor.bathroom_light_mirror_action:
   friendly_name: Кнопка  выключателя светильника в ванной
-sensor.bathroom_mirror_switch_battery:
+sensor.bathroom_light_mirror_battery:
   friendly_name: Батарея кнопки

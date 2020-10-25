@@ -2,17 +2,17 @@
     initial_state: true
     trigger:
       - platform: state
-        entity_id: sensor.bathroom_mirror_switch_action
+        entity_id: sensor.bathroom_light_mirror_action
         to: 'single' 
     action:
       - service: switch.toggle
-        entity_id: switch.bathroom_light1
+        entity_id: switch.bathroom_light_mirror
 
   - alias: bathroom_start_timer
     initial_state: true
     trigger:
       - platform: state
-        entity_id: switch.bathroom_light1
+        entity_id: switch.bathroom_light_mirror
         to: 'on'
         from: 'off'
     action:
@@ -23,7 +23,7 @@
     initial_state: true
     trigger:
       - platform: state
-        entity_id: switch.bathroom_light1
+        entity_id: switch.bathroom_light_mirror
         to: 'off'
         from: 'on'
     condition:
@@ -43,11 +43,11 @@
           entity_id: timer.bathroom_light_mirror
     condition:
       - condition: state
-        entity_id: switch.bathroom_light1
+        entity_id: switch.bathroom_light_mirror
         state: 'on'
     action:
       - service: switch.turn_off
-        entity_id: switch.bathroom_light1
+        entity_id: switch.bathroom_light_mirror
         
         
         

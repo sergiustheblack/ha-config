@@ -6,5 +6,5 @@
         entities:
           - sensor.bathroom_relay_consumption
           - sensor.bathroom_relay_power
-          - switch.bathroom_light1
+          - switch.bathroom_light_mirror
           - timer.bathroom_light_mirror
