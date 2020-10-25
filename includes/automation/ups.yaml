@@ -1,0 +1,39 @@
+  - alias: 'Notify when UPS goes on battery'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.ups_status
+        from: 'ONLINE'
+        to: 'ONBATT'
+    action:
+  # Оповещение об отключении электричества 
+      - service: notify.telegram_tech
+        data:
+         message: "\U000026A1 Пропало напряжение в сети. Время: {{ states('sensor.time_date') }}"
+  
+  - alias: 'Notify when UPS goes on ac'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.ups_status
+        from: 'ONBATT'
+        to: 'ONLINE'
+    action:
+      - service: notify.telegram_tech
+        data:
+         message: "\U0000267B Восстановлено напряжение в сети. Время: {{ states('sensor.time_date') }}"
+         
+  - alias: 'Notify when UPS on low battery'
+    initial_state: true
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.ups_battery
+        below: 15
+    action:
+      - service: notify.telegram_tech
+        data:
+         message: "\U000026A1 Заряд батареи всего: {{ states('sensor.ups_battery') }}"
+         
+         
+         
+         

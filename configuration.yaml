@@ -36,6 +36,21 @@ apcupsd:
   host: a722577e-apcupsd
   port: 3551
   
+telegram_bot:
+  - platform: polling
+    api_key: !secret bot_main
+    allowed_chat_ids:
+      - -332716958 # tech
+      - -373800927 # main
+      - 42389353 # me
+notify:
+  - platform: telegram
+    name: telegram
+    chat_id: -373800927 
+  - platform: telegram
+    name: telegram_tech
+    chat_id: -332716958
+
 # ext files
 timer: !include includes/timer.yaml
 input_boolean: !include includes/input_boolean.yaml
