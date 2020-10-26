@@ -1,0 +1,17 @@
+  - alias: 'Turn off switch'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/switchoff'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/switchoff'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: switch.turn_off
+        data_template:
+          entity_id: '{{ "switch." ~ trigger.event.data["args"] | first | string }}'
