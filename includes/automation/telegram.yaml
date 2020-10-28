@@ -15,3 +15,51 @@
       - service: switch.turn_off
         data_template:
           entity_id: '{{ "switch." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.answer_callback_query
+        data:
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: |
+            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+      - service: telegram_bot.send_message
+        data:
+          message: |
+            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+        
+  - alias: 'Turn on switch'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/switchon'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/switchon'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: switch.turn_on
+        data_template:
+          entity_id: '{{ "switch." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.answer_callback_query
+        data:
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: |
+            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+      - service: telegram_bot.send_message
+        data:
+          message: |
+            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+            blah
+          
+# Info callback          
+          

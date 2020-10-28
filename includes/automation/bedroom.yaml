@@ -5,17 +5,20 @@
         entity_id: sensor.bedroom_dev_curlinghair_power
         above: 20
         for:
-          minutes: "30"  # temp
-      - platform: time_pattern
-        minutes: "/10"
-    condition:
-      - condition: numeric_state
-        entity_id: sensor.bedroom_dev_curlinghair_power
-        above: 20
+          #minutes: "30"  # temp
+          seconds: "30"
     action:
-      - service: notify.telegram
-        data:
-          message: "Плойка включена уже 30 минут"
-          data:
-            inline_keyboard:
-              - 'Выключить плойку:/switchoff bedroom_dev_curlinghair_switch'
+      - repeat:
+          sequence:
+            - service: notify.telegram_tech
+              data:
+                message: "Плойка включена уже 30 минут"
+                data:
+                  inline_keyboard:
+                    - 'Выключить плойку:/switchoff bedroom_dev_curlinghair_switch'
+            - delay:
+                seconds: 10
+          until:
+            - condition: numeric_state
+              entity_id: sensor.bedroom_dev_curlinghair_power
+              below: "0.1"
