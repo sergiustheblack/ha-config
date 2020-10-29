@@ -35,7 +35,11 @@ lovelace:
 apcupsd:
   host: a722577e-apcupsd
   port: 3551
-  
+
+weather:
+  - platform: yandex_weather
+    api_key: !secret yandex_api_key
+
 telegram_bot:
   - platform: polling
     api_key: !secret bot_main
@@ -55,6 +59,7 @@ notify:
 timer: !include includes/timer.yaml
 input_boolean: !include includes/input_boolean.yaml
 input_number: !include includes/input_number.yaml
+input_text: !include includes/input_text.yaml
 group: !include includes/groups.yaml
 script: !include includes/scripts.yaml
 scene: !include includes/scenes.yaml

@@ -5,19 +5,34 @@
         entity_id: sensor.bedroom_dev_curlinghair_power
         above: 20
         for:
-          #minutes: "30"  # temp
-          seconds: "30"
+          minutes: "30"  # temp
+          #seconds: "30" #temp
     action:
       - repeat:
           sequence:
-            - service: notify.telegram_tech
+#            - service: input_text.set_value
+#              data:
+#                entity_id: input_text.for_messaging
+#                value: |
+#                  {%- set item = states["sensor.bedroom_dev_curlinghair_power"] %}
+#                  Розетка с плойкой {%- if item.state == "OFF" %} выключена.
+#                  {%- elif item.state == "ON" %} включена.
+#                  Потребление: {{ item["attributes"]["power"] }}
+#                  
+#                  Судя по потреблению, плойка
+#                  {%- if item["attributes"]["power"] > 20 %} включена.
+#                  {%- else %} выключена. {%- endif %}{%- endif %}
+            - service: notify.telegram
               data:
                 message: "Плойка включена уже 30 минут"
                 data:
                   inline_keyboard:
                     - 'Выключить плойку:/switchoff bedroom_dev_curlinghair_switch'
+#                    - 'Статус плойки:/message {{ states("input_text.for_messaging") }}'
+                       
             - delay:
-                seconds: 10
+                #seconds: 10 # temp
+                minutes: 10
           until:
             - condition: numeric_state
               entity_id: sensor.bedroom_dev_curlinghair_power

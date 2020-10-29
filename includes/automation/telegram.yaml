@@ -1,3 +1,17 @@
+  - alias: 'Ping'
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/ping'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          callback_query_id: '{{ trigger.event.data.id }}'
+          target: '{{ trigger.event.data.chat_id }}'
+          message: 'Мьяу!'
+    
+# Switch control
   - alias: 'Turn off switch'
     trigger:
       - platform: event
@@ -19,12 +33,14 @@
           seconds: '0.5'
       - service: telegram_bot.answer_callback_query
         data:
+          target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
       - service: telegram_bot.send_message
         data:
+          target: '{{ trigger.event.data.chat_id }}'
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
@@ -50,16 +66,86 @@
           seconds: '0.5'
       - service: telegram_bot.answer_callback_query
         data:
+          target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
       - service: telegram_bot.send_message
         data:
+          target: '{{ trigger.event.data.chat_id }}'
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
-            blah
           
 # Info callback          
+  - alias: 'Get item status'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/itemstatus'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/itemstatus'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set item = states[trigger.event.data["args"] | first] %}
+            *{{ item.attributes.friendly_name | replace('_','\_') }}*
+            
+            {%- for state_key in item["attributes"] %}
+            {{ state_key | replace('_','\_') }} = {{ item.attributes[state_key] | replace('_','\_') }}
+            {%- endfor %}
+# Send simple message
+  - alias: 'Send message'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/message'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/message'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: '{{ trigger.event.data["args"] | join(" ") }}'
+          
+          
+# main menu
+  - alias: 'TG Start'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/start'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/start'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: 'Мьяу!'
+          inline_keyboard: ['Поехали:/start']
+#            - 'Ванная:/wow, Спальня:/wow'
+#            - 'Коридор:/'
+#              - 'Балкон'
+#              - 'Кухня'
+#              - 'Спальня'
+#              - 'Кладовка'
           

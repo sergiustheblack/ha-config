@@ -21,3 +21,11 @@ sensor.bathroom_light_mirror_action:
   friendly_name: Кнопка  выключателя светильника в ванной
 sensor.bathroom_light_mirror_battery:
   friendly_name: Батарея кнопки
+
+# Спальня
+# Aqara EU smart plug (SP-EUC01) - розетка под плойку
+
+switch.bedroom_dev_curlinghair_switch:
+  friendly_name: Розетка с плойкой
+sensor.bedroom_dev_curlinghair_power:
+  friendly_name: Плойка потребление
