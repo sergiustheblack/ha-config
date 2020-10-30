@@ -124,6 +124,72 @@
           message: '{{ trigger.event.data["args"] | join(" ") }}'
           
           
+# Weather
+  - alias: 'Weather report'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/weather'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/weather'
+    action:
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set ru_daytime = 
+              [
+                {"night": "ночью"}, 
+                {"morning": "утром"},
+                {"day": "днём"},
+                {"evening": "вечером"}
+              ] 
+            %}
+            
+            {%- set emojiweather = 
+              [
+                {"Ясно": "\U00002600"},
+                {"Малооблачно": "\U0001F324"},
+                {"Облачно с прояснениями": "\U0001F325"},
+                {"Пасмурно": "\U00002601"},
+                {"Небольшой дождь": "\U0001F326"},
+                {"Дождь": "\U0001F327"},
+                {"Сильный дождь": "\U0001F327\U0001F327"},
+                {"Сильный дождь, гроза": "\U000026C8"},
+                {"Дождь со снегом": "\U0001F327\U0001F328"},
+                {"Снег": "\U0001F328U"},
+                {"Снегопад": "\U0001F328\U0001F328"},
+                {"Небольшой снег": "\U0001F328"}
+              ] 
+            %}
+            
+            {%- macro to_ru_daytime(daytime) -%}
+            {{ (ru_daytime | map(attribute=daytime) | select('string') | list)[0] }}
+            {%- endmacro %}
+            
+            {%- macro to_emoji(weather) -%}
+            {{ (emojiweather | map(attribute=weather) | select('string') | list)[0] }}
+            {%- endmacro %}
+            
+            {%- set sensor = states.weather.yandex_weather.attributes %}
+            {%- set forecast = sensor.forecast %}
+            Прогноз собран *{{ sensor["observation_time"] }}*
+            {{ to_emoji(sensor["weather_condition"]) }}На улице {{ sensor["weather_condition"] | lower }}.
+            Температура воздуха {{ sensor["temperature"] }}˚C, ощущается как {{ sensor["feels_like"] }}˚C.
+            *Прогноз:*
+            {%- for f in forecast %}
+            
+            {{ f.datetime.strftime('%A %B %m') }} {{ to_ru_daytime(f.part_of_day) }}:
+            {{ f["weather_condition"]}}.
+            Температура воздуха {{ f.temperature }}˚C, ощущается как {{ f.feels_like }},
+            Минимум {{ f.templow }}˚C.
+            Осадки (мм): {{ f.precipitation }}
+            Вероятность выпадения осадков: {{ f.precipitation_probability }}
+            {%- endfor %}
+
 # main menu
   - alias: 'TG Start'
     trigger:
