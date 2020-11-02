@@ -58,7 +58,7 @@
             *Прогноз:*
             {%- for f in forecast %}
             
-            {{ f.datetime.strftime('%A %B %m') }} {{ to_ru_daytime(f.part_of_day) }}:
+            {{ f.datetime.strftime('%A %B %d') }} {{ to_ru_daytime(f.part_of_day) }}:
             {{ f["weather_condition"]}}.
             Температура воздуха {{ f.temperature }}˚C, ощущается как {{ f.feels_like }},
             Минимум {{ f.templow }}˚C.

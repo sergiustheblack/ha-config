@@ -1,0 +1,32 @@
+  - alias: Hass Startup Notification #Уведомление о включении процесса
+    initial_state: True
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - service: notify.notify
+        data:
+          title: "{{ '\ud83c\udd97' }} Системное уведомление"
+          message: "{{ '\ud83c\udfc1' }} Cервер запущен в {{ states('sensor.time_date') }}."
+
+  - alias: Home Assistant Stop - Notify   #Уведомление - о остановке процесса HA
+    initial_state: 'on'
+    trigger:
+      platform: event
+      event_type: homeassistant_stop
+    action:
+      - service: notify.telegram_tech
+        data:
+          title: Home Assistant
+          message: "{{ '\u2757\ufe0f' }} Сервер остановлен в {{ states('sensor.time_date') }}"
+
+  - alias: 'Update Available Notifications' #Уведомление о наличии обновлений
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: updater.updater
+    action:
+      service: notify.telegram_tech
+      data:
+        title: Системное уведомление
+        message: '{{ "\ud83c\udf0d" }} Доступно новое обновление.'

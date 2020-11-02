@@ -49,6 +49,7 @@ telegram_bot:
       - -332716958 # tech
       - -373800927 # main
       - 42389353 # me
+      - 182901558 # Natasha
 notify:
   - platform: telegram
     name: telegram
