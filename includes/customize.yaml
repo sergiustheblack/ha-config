@@ -1,19 +1,19 @@
 # Ванная
 # Relay Aqara LLKZMK11LM
 sensor.bathroom_relay_consumption:
-  friendly_name: Aqara Ванная LKZMK11LM расход
+  friendly_name: Реле расход
   unit_of_measurement: 'КВт/ч'
 sensor.bathroom_relay_linkquality:
-  friendly_name: Aqara Ванная LKZMK11LM сигнал
+  friendly_name: Реле сигнал
 sensor.bathroom_relay_power:
-  friendly_name: Aqara Ванная LKZMK11LM потребление
+  friendly_name: Реле потребление
   unit_of_measurement: 'Вт'
 switch.bathroom_relay_switch_l2:
-  friendly_name: Aqara Ванная LKZMK11LM 2
+  friendly_name: Реле 2
 sensor.bathroom_relay_temperature:
-  friendly_name: Aqara Ванная LKZMK11LM температура
+  friendly_name: Реле температура
 switch.bathroom_light_mirror:
-  friendly_name: Ванная Светильник
+  friendly_name: Светильник
   icon: mdi:mirror
 
 # Aqara D1 single key wireless wall switch (WXKG06LM)
