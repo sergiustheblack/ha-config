@@ -1,0 +1,7 @@
+  - title: Кухня
+    icon: mdi:chef-hat
+    panel: false
+    cards:
+      - type: entities
+        entities:
+          - light.kitchen_light_ceiling_switch

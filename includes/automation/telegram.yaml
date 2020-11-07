@@ -11,6 +11,106 @@
           target: '{{ trigger.event.data.chat_id }}'
           message: 'Мьяу!'
     
+# light control
+  - alias: 'Turn off light'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/lightoff'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/lightoff'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: light.turn_off
+        data_template:
+          entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.answer_callback_query
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+        
+  - alias: 'Turn on light'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/lighton'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/lighton'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.answer_callback_query
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+            
+  - alias: 'TG Toggle light'
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: '/lighttoggle'
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/lighttoggle'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: light.toggle
+        data_template:
+          entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.answer_callback_query
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+            
 # Switch control
   - alias: 'Turn off switch'
     trigger:
@@ -209,14 +309,14 @@
             
             {%- set sensor = states.weather.yandex_weather.attributes %}
             {%- set forecast = sensor.forecast %}
-            Прогноз собран *{{ sensor["observation_time"] }}*
+            Прогноз собран *{{ ((as_timestamp(now()) - as_timestamp(sensor.observation_time)) / 3600)  | round(0,'ceiling') }} часов назад.*
             {{ to_emoji(sensor["weather_condition"]) }}На улице {{ sensor["weather_condition"] | lower }}.
             Температура воздуха {{ sensor["temperature"] }}˚C, ощущается как {{ sensor["feels_like"] }}˚C.
             *Прогноз:*
             {%- for f in forecast %}
             
             {{ f.datetime.strftime('%A %B %d') }} {{ to_ru_daytime(f.part_of_day) }}:
-            {{ f["weather_condition"]}}.
+            {{ to_emoji(f["weather_condition"]) }}{{ f["weather_condition"]}}.
             Температура воздуха {{ f.temperature }}˚C, ощущается как {{ f.feels_like }},
             Минимум {{ f.templow }}˚C.
             Осадки (мм): {{ f.precipitation }}
@@ -258,9 +358,14 @@
               {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
               {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
               {%- endfor %}
+              {%- for entity in states.light %}
+              {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
+              {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
+              {%- endfor %}
               {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
               {{ nm.lst | join(", ") }}
             - "Погода:/weather" 
+            
   - alias: 'TG Start Callback'
     trigger:
       - platform: event
@@ -294,6 +399,10 @@
               
               {%- set nm = namespace(str = '') %}
               {%- for entity in states.switch %}
+              {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
+              {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
+              {%- endfor %}
+              {%- for entity in states.light %}
               {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
               {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
               {%- endfor %}
