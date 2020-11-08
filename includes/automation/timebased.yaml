@@ -52,14 +52,14 @@
             {%- set sensor = states.weather.yandex_weather.attributes %}
             {%- set forecast = sensor.forecast %}
             {{ hello }}
-            Прогноз собран *{{ sensor["observation_time"] }}*
+            Прогноз собран *{{ ((as_timestamp(now()) - as_timestamp(sensor.observation_time)) / 3600)  | round(0,'ceiling') }} часов назад.*
             {{ to_emoji(sensor["weather_condition"]) }}На улице {{ sensor["weather_condition"] | lower }}.
             Температура воздуха {{ sensor["temperature"] }}˚C, ощущается как {{ sensor["feels_like"] }}˚C.
             *Прогноз:*
             {%- for f in forecast %}
             
             {{ f.datetime.strftime('%A %B %d') }} {{ to_ru_daytime(f.part_of_day) }}:
-            {{ f["weather_condition"]}}.
+            {{ to_emoji(f["weather_condition"]) }}{{ f["weather_condition"]}}.
             Температура воздуха {{ f.temperature }}˚C, ощущается как {{ f.feels_like }},
             Минимум {{ f.templow }}˚C.
             Осадки (мм): {{ f.precipitation }}

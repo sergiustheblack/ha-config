@@ -476,7 +476,7 @@
               {%- endmacro %}
               
             {%- set nm = namespace(str="") %}
-            {%- for entity in states.switch %}
+            {%- for entity in states.switch | list + states.light | list %}
             {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
             {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
             {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
@@ -508,13 +508,17 @@
             - |
               {%- set selected_room = trigger.event.data["args"] | first %}
               {%- set nm = namespace(str="") %}
-              {%- for entity in states.switch %}
+              {%- for entity in states.switch | list + states.light | list %}
               {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
               {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
               {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
               {%- set device = entity.entity_id.split(".")[1] %}
               {%- if room == selected_room -%}
+              {%- if entity.domain == 'switch' -%}
               {%- set nm.str = nm.str ~ "," ~  entity.attributes.get('friendly_name') | replace("_","\_") ~ ":/switchtoggle " ~ device ~ " " ~ room %}
+              {%- elif entity.domain == 'light' -%}
+              {%- set nm.str = nm.str ~ "," ~  entity.attributes.get('friendly_name') | replace("_","\_") ~ ":/lighttoggle " ~ device ~ " " ~ room %}
+              {%- endif %}
               {%- endif %}
               {%- endfor %}
               {{ nm.str.split(",")[1:] | join(", ")}}
@@ -537,6 +541,94 @@
           callback_query_id: '{{ trigger.event.data.id }}'
           message: 'Мьяу!'
           inline_keyboard: [['bathroom:/room bathroom'], ['bedroom:/room bedroom']]
+
+# Fun
+  - alias: 'sing'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/sing'
+    action:
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: 'Мау мау'
+          file: '/media/maumau.jpg'
+      - delay:
+          seconds: 1
+      - service: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: '{{ trigger.event.data.chat_id }}'
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: 'Киса киса'
+          file: '/media/kisakisa.jpg'
+      - delay:
+          seconds: 1
+      - service: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: '{{ trigger.event.data.chat_id }}'
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: 'Мау мау'
+          file: '/media/maumau.jpg'
+      - delay:
+          seconds: 1
+      - service: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: '{{ trigger.event.data.chat_id }}'
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: 'Киса киса'
+          file: '/media/kisakisa.jpg'
+      - delay:
+          seconds: 1
+      - service: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: '{{ trigger.event.data.chat_id }}'
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: 'Мау мау'
+          file: '/media/maumau.jpg'
+      - delay:
+          seconds: 1
+      - service: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: '{{ trigger.event.data.chat_id }}'
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: 'Киса киса'
+          file: '/media/kisakisa.jpg'
+      - delay:
+          seconds: 1
+      - service: telegram_bot.delete_message
+        data:
+          message_id: "last"
+          chat_id: '{{ trigger.event.data.chat_id }}'
+      - service: telegram_bot.send_photo
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          caption: |
+            {{ ["Я киса!", "Ты киса!"] | random }}
+          file: '/media/iamkisa.jpg'
           
           
           
