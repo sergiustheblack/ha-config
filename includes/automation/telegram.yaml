@@ -12,14 +12,10 @@
           message: 'Мьяу!'
     
 # light control
-  - alias: 'Turn off light'
+  - alias: 'Turn off light callback'
     trigger:
       - platform: event
         event_type: telegram_callback
-        event_data:
-          command: '/lightoff'
-      - platform: event
-        event_type: telegram_command
         event_data:
           command: '/lightoff'
     condition:
@@ -38,21 +34,11 @@
           message: |
             {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
-      - service: telegram_bot.send_message
-        data:
-          target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
         
-  - alias: 'Turn on light'
+  - alias: 'Turn on light call'
     trigger:
       - platform: event
         event_type: telegram_callback
-        event_data:
-          command: '/lighton'
-      - platform: event
-        event_type: telegram_command
         event_data:
           command: '/lighton'
     condition:
@@ -71,21 +57,11 @@
           message: |
             {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
-      - service: telegram_bot.send_message
-        data:
-          target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
             
-  - alias: 'TG Toggle light'
+  - alias: 'TG Toggle light call'
     trigger:
       - platform: event
         event_type: telegram_callback
-        event_data:
-          command: '/lighttoggle'
-      - platform: event
-        event_type: telegram_command
         event_data:
           command: '/lighttoggle'
     condition:
@@ -104,6 +80,66 @@
           message: |
             {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+            
+  - alias: 'Turn off light'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/lightoff'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: light.turn_off
+        data_template:
+          entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+        
+  - alias: 'Turn on light'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/lighton'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+            
+  - alias: 'TG Toggle light'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/lighttoggle'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: light.toggle
+        data_template:
+          entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
@@ -112,14 +148,10 @@
             {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
             
 # Switch control
-  - alias: 'Turn off switch'
+  - alias: 'Turn off switch call'
     trigger:
       - platform: event
         event_type: telegram_callback
-        event_data:
-          command: '/switchoff'
-      - platform: event
-        event_type: telegram_command
         event_data:
           command: '/switchoff'
     condition:
@@ -138,21 +170,11 @@
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
-      - service: telegram_bot.send_message
-        data:
-          target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
         
-  - alias: 'Turn on switch'
+  - alias: 'Turn on switch call'
     trigger:
       - platform: event
         event_type: telegram_callback
-        event_data:
-          command: '/switchon'
-      - platform: event
-        event_type: telegram_command
         event_data:
           command: '/switchon'
     condition:
@@ -171,21 +193,11 @@
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
-      - service: telegram_bot.send_message
-        data:
-          target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
             
-  - alias: 'TG Toggle switch'
+  - alias: 'TG Toggle switch call'
     trigger:
       - platform: event
         event_type: telegram_callback
-        event_data:
-          command: '/switchtoggle'
-      - platform: event
-        event_type: telegram_command
         event_data:
           command: '/switchtoggle'
     condition:
@@ -204,6 +216,66 @@
           message: |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+          
+  - alias: 'Turn off switch'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/switchoff'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: switch.turn_off
+        data_template:
+          entity_id: '{{ "switch." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+        
+  - alias: 'Turn on switch'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/switchon'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: switch.turn_on
+        data_template:
+          entity_id: '{{ "switch." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
+      - service: telegram_bot.send_message
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
+            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+            
+  - alias: 'TG Toggle switch'
+    trigger:
+      - platform: event
+        event_type: telegram_command
+        event_data:
+          command: '/switchtoggle'
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: switch.toggle
+        data_template:
+          entity_id: '{{ "switch." ~ trigger.event.data["args"] | first | string }}'
+      - delay:
+          seconds: '0.5'
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
@@ -236,6 +308,7 @@
             {%- for state_key in item["attributes"] %}
             {{ state_key | replace('_','\_') }} = {{ item.attributes[state_key] | replace('_','\_') }}
             {%- endfor %}
+            
 # Send simple message
   - alias: 'Send message'
     trigger:
