@@ -2,7 +2,7 @@
   - alias: 'Daily weather report'
     trigger:
       platform: time
-      at: "09:00"
+      at: "08:00"
     action:
       - service: notify.telegram
         data:
