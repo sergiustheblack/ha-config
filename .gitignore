@@ -4,3 +4,4 @@ secrets.yaml
 .storage
 .HA_VERSION
 custom_components/
+appdaemon
