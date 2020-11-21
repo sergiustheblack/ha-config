@@ -1,0 +1,7 @@
+  - title: Пылесос
+    icon: mdi:robot-vacuum
+    panel: true
+    cards:
+      - type: custom:xiaomi-vacuum-card
+        entity: vacuum.barsik
+        vendor: deebot

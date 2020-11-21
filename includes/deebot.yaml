@@ -1,0 +1,6 @@
+  username: !secret ecovacs_user
+  password: !secret ecovacs_password
+  country: ru
+  continent: eu
+  deviceid:
+    - E03Q14004B09HCKJ0013

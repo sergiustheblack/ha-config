@@ -5,3 +5,5 @@ secrets.yaml
 .HA_VERSION
 custom_components/
 appdaemon
+netdaemon
+www
