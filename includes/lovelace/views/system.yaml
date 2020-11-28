@@ -85,16 +85,18 @@
         # END UPS
       - type: vertical-stack
         cards:
-          - type: horizontal-stack
-            cards:
-              - type: history-graph
-                entities:
-                  - sensor.cpu_temperature
-                hours_to_show: 24
-                refresh_interval: 120
-                title: Cpu Temperature
-              - type: entities
-                entities:
-                  - input_boolean.test_input
-                  - input_number.test_input
-                  - timer.test_timer
+          - type: history-graph
+            entities:
+              - sensor.cpu_temperature
+            hours_to_show: 24
+            refresh_interval: 120
+            title: Cpu Temperature
+          - type: entities
+            entities:
+              - input_boolean.test_input
+              - input_number.test_input
+              - timer.test_timer
+          - type: history-graph
+            entities:
+             - entity: sensor.maria_db_size
+               name: Maria DB

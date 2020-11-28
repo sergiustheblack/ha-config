@@ -1,0 +1,17 @@
+  db_url: !secret maria_url
+  purge_keep_days: 7
+  exclude:
+    entities:
+      - sensor.time
+      - sensor.date
+      - sensor.time_date
+      - sun.sun
+      - automation.daily_weather_report
+    entity_globs:
+      - sensor.oneplus*
+      - sensor.mi_a1*
+      - sensor.ups_*
+  include:
+    entities:
+      - sensor.ups_load
+      - sensor.ups_battery

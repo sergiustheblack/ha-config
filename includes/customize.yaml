@@ -15,7 +15,7 @@ sensor.bathroom_relay_temperature:
 switch.bathroom_light_mirror:
   friendly_name: Светильник
   icon: mdi:mirror
-
+  
 # Aqara D1 single key wireless wall switch (WXKG06LM)
 sensor.bathroom_light_mirror_action:
   friendly_name: Кнопка  выключателя светильника в ванной
@@ -33,3 +33,25 @@ sensor.bedroom_dev_curlinghair_power:
 # Кухня
 light.kitchen_light_ceiling_switch:
   friendly_name: Люстра
+
+# Пылесос
+binary_sensor.barsik_mop_attached:
+  friendly_name: Установлен бак с водой
+sensor.barsik_brush:
+  friendly_name: Состояние щетки
+sensor.barsik_heap:
+  friendly_name: Состояние бака
+sensor.barsik_last_clean_image:
+  friendly_name: Последняя убока
+sensor.barsik_sidebrush:
+  friendly_name: Состояние боковой щетки
+sensor.barsik_stats_area:
+  friendly_name: ХЗ, какая-то зона
+sensor.barsik_stats_time:
+  friendly_name: ХЗ, время уборки
+sensor.barsik_stats_type:
+  friendly_name: ХЗ, авто
+sensor.barsik_water_level:
+  friendly_name: Подача воды
+vacuum.barsik:
+  friendly_name: Пылесос

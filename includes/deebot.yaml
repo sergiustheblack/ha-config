@@ -4,3 +4,5 @@
   continent: eu
   deviceid:
     - E03Q14004B09HCKJ0013
+  show_color_rooms: True
+  livemappath: 'www/'

@@ -1,0 +1,8 @@
+  - title: Спальня
+    icon: mdi:bed
+    panel: false
+    cards:
+      - type: entities
+        entities:
+          - switch.bedroom_dev_curlinghair_switch
+          - sensor.bedroom_dev_curlinghair_power

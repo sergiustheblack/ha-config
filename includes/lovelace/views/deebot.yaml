@@ -4,4 +4,4 @@
     cards:
       - type: custom:xiaomi-vacuum-card
         entity: vacuum.barsik
-        vendor: deebot
+        vendor: ecovacs
