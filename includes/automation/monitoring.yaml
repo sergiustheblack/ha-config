@@ -30,3 +30,26 @@
       data:
         title: Системное уведомление
         message: '{{ "\ud83c\udf0d" }} Доступно новое обновление.'
+
+  - alias: CPU temperature
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      above: 60
+    action:
+      service: notify.telegram_tech
+      data:
+        title: Системное уведомление
+        message: 'Температура CPU {{ sensor.cpu_temperature }}'
+  - alias: SSD temperature
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ssd_temperature
+      above: 50
+    action:
+      service: notify.telegram_tech
+      data:
+        title: Системное уведомление
+        message: 'Температура SSD {{ sensor.ssd_temperature }}'

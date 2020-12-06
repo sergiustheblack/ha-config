@@ -7,83 +7,100 @@
         #    - entity: sensor.maria_db_size
         #      name: Объем БД
         #      icon: mdi:database
-      - type: vertical-stack
+      - type: horizontal-stack
         cards:
-        - type: markdown
-          content: >
-             **Графики** 
-        - type: horizontal-stack
-          cards:
-           - type: gauge
-             name: Загрузка CPU
-             unit: '%'
-             entity: sensor.processor_use
-             severity:
-                green: 0
-                yellow: 60
-                red: 85
-           - type: gauge
-             name: Загрузка ОЗУ
-             unit: '%'
-             entity: sensor.memory_use_percent
-             severity:
-                green: 0
-                yellow: 60
-                red: 85
-        - type: horizontal-stack
-          cards:
-           - type: gauge
-             name: Диск заполнен
-             unit: '%'
-             entity: sensor.disk_use_percent
-             severity:
-                green: 0
-                yellow: 60
-                red: 85    
-           - type: gauge
-             name: Свободное место
-             unit: 'Гб'
-             entity: sensor.disk_free
-             severity:
-                red: 2
-                yellow: 6
-                green: 8
-        # UPS
-        - type: horizontal-stack
-          cards: 
-            - type: entities
-              entities:
-                - entity: sensor.ups_status
-                  name: Status
-                - entity: sensor.ups_input_voltage
-                  name: Input Voltage
-                - entity: sensor.ups_time_left
-                  name: Battery Runtime
-              theme: default
-              title: APC UPS STATUS 
-              
-        - type: horizontal-stack
-          cards: 
+          - type: vertical-stack
+            cards:
+            - type: markdown
+              content: >
+                 **Графики** 
             - type: gauge
-              entity: sensor.ups_battery
-              max: 100
-              min: 0
-              name: Зарядка
+              name: Загрузка CPU
+              unit: '%'
+              entity: sensor.processor_use
               severity:
-                green: 0
-                red: -80
-                yellow: -30 
+                 green: 0
+                 yellow: 60
+                 red: 85
             - type: gauge
-              entity: sensor.ups_load
-              max: 100
-              min: 0
-              name: Нагрузка
+              name: Загрузка ОЗУ
+              unit: '%'
+              entity: sensor.memory_use_percent
               severity:
-                green: 0
-                red: 90
-                yellow: 70
-        # END UPS
-      - type: vertical-stack
+                 green: 0
+                 yellow: 60
+                 red: 85
+            - type: horizontal-stack
+              cards:
+               - type: gauge
+                 name: Диск заполнен
+                 unit: '%'
+                 entity: sensor.disk_use_percent
+                 severity:
+                    green: 0
+                    yellow: 60
+                    red: 85    
+               - type: gauge
+                 name: Свободное место
+                 unit: 'Гб'
+                 entity: sensor.disk_free
+                 severity:
+                    red: 2
+                    yellow: 6
+                    green: 8
+            # UPS
+            - type: horizontal-stack
+              cards: 
+                - type: entities
+                  entities:
+                    - entity: sensor.ups_status
+                      name: Status
+                    - entity: sensor.ups_input_voltage
+                      name: Input Voltage
+                    - entity: sensor.ups_time_left
+                      name: Battery Runtime
+                  theme: default
+                  title: APC UPS STATUS 
+                  
+            - type: horizontal-stack
+              cards: 
+                - type: gauge
+                  entity: sensor.ups_battery
+                  max: 100
+                  min: 0
+                  name: Зарядка
+                  severity:
+                    green: 0
+                    red: -80
+                    yellow: -30 
+                - type: gauge
+                  entity: sensor.ups_load
+                  max: 100
+                  min: 0
+                  name: Нагрузка
+                  severity:
+                    green: 0
+                    red: 90
+                    yellow: 70
+            # END UPS
+          - type: vertical-stack
+            cards:
+              - type: history-graph
+                entities:
+                  - sensor.cpu_temperature
+                hours_to_show: 24
+                refresh_interval: 120
+                title: Cpu Temperature
+              - type: entities
+                entities:
+                  - input_boolean.test_input
+                  - input_number.test_input
+                  - timer.test_timer
+              - type: history-graph
+                entities:
+                 - entity: sensor.maria_db_size
+                   name: Maria DB
+      - type: horizontal-stack
         cards:
           - type: history-graph
             entities:
@@ -91,12 +108,3 @@
             hours_to_show: 24
             refresh_interval: 120
             title: Cpu Temperature
-          - type: entities
-            entities:
-              - input_boolean.test_input
-              - input_number.test_input
-              - timer.test_timer
-          - type: history-graph
-            entities:
-             - entity: sensor.maria_db_size
-               name: Maria DB

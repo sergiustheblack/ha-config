@@ -7,3 +7,4 @@ custom_components/
 appdaemon
 netdaemon
 www
+.ssh
