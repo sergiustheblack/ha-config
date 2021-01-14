@@ -1,0 +1,6 @@
+  - platform: switch
+    name: bedroom_light_ceiling_left
+    entity_id: switch.bedroom_light_ceiling_left
+  - platform: switch
+    name: bedroom_light_ceiling_right
+    entity_id: switch.bedroom_light_ceiling_right

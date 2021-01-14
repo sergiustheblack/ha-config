@@ -9,6 +9,19 @@
           title: "{{ '\ud83c\udd97' }} Системное уведомление"
           message: "{{ '\ud83c\udfc1' }} Cервер запущен в {{ states('sensor.time_date') }}."
 
+  - alias: Hass Startup Notification #Уведомление о включении процесса
+    initial_state: True
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - delay:
+          minutes: 3
+      - service: notify.telegram_tech
+        data:
+          title: "{{ '\ud83c\udd97' }} Системное уведомление"
+          message: "{{ '\ud83c\udfc1' }} Cервер запущен в {{ states('sensor.time_date') }}."
+
   - alias: Home Assistant Stop - Notify   #Уведомление - о остановке процесса HA
     initial_state: 'on'
     trigger:

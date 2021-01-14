@@ -29,6 +29,16 @@ switch.bedroom_dev_curlinghair_switch:
   friendly_name: Розетка с плойкой
 sensor.bedroom_dev_curlinghair_power:
   friendly_name: Плойка потребление
+light.bedroom_light_ceiling_left:
+  friendly_name: Люстра 2
+light.bedroom_light_ceiling_right:
+  friendly_name: Люстра 3
+switch.bedroom_light_ceiling_left:
+  friendly_name: Люстра 2
+switch.bedroom_light_ceiling_right:
+  friendly_name: Люстра 3
+light.bedroom_light_ceiling_all:
+  friendly_name: Люстра
   
 # Кухня
 light.kitchen_light_ceiling_switch:

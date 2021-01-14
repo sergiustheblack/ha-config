@@ -1,0 +1,5 @@
+  - platform: group
+    name: bedroom_light_ceiling_all
+    entities:
+      - light.bedroom_light_ceiling_left
+      - light.bedroom_light_ceiling_right
