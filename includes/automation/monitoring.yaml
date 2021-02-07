@@ -16,11 +16,11 @@
         event: start
     action:
       - delay:
-          minutes: 3
+          minutes: 1
       - service: notify.telegram_tech
         data:
-          title: "{{ '\ud83c\udd97' }} Системное уведомление"
-          message: "{{ '\ud83c\udfc1' }} Cервер запущен в {{ states('sensor.time_date') }}."
+          title: "Системное уведомление"
+          message: "Cервер запущен в {{ states('sensor.time_date') }}."
 
   - alias: Home Assistant Stop - Notify   #Уведомление - о остановке процесса HA
     initial_state: 'on'
