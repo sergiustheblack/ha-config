@@ -4,3 +4,9 @@
   - platform: switch
     name: bedroom_light_ceiling_right
     entity_id: switch.bedroom_light_ceiling_right
+  - platform: switch
+    name: balcony_light_ceiling
+    entity_id: switch.balcony_light_ceiling
+  - platform: switch
+    name: bathroom_light_mirror
+    entity_id: switch.bathroom_relay_switch_l2
