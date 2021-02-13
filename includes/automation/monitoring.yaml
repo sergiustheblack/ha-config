@@ -69,7 +69,6 @@
         
   - alias: Login Failure   #Уведомление о неверном вводе логина и пароля
     initial_state: 'on'
-    hide_entity: false
     trigger:
       - platform: state
         entity_id: persistent_notification.http_login
