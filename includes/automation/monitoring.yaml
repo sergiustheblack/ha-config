@@ -42,7 +42,7 @@
       service: notify.telegram_tech
       data:
         title: Системное уведомление
-        message: '{{ "\ud83c\udf0d" }} Доступно новое обновление.'
+        message: 'Доступно новое обновление.'
 
   - alias: CPU temperature
     initial_state: 'on'
@@ -66,3 +66,21 @@
       data:
         title: Системное уведомление
         message: 'Температура SSD {{ sensor.ssd_temperature }}'
+        
+  - alias: Login Failure   #Уведомление о неверном вводе логина и пароля
+    initial_state: 'on'
+    hide_entity: false
+    trigger:
+      - platform: state
+        entity_id: persistent_notification.http_login
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state != off }}"
+    action:
+      - service: notify.telegram_tech
+        data:
+          title: Системное уведомление
+          message: "Warning - Не удачная попытка подлючения. Не верно введен пароль. Всего попыток зафиксировано: {{ states('sensor.badlogin') }} {{ states.persistent_notification.http_login.attributes.message }}"
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: http_login

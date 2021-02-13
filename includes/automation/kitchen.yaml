@@ -1,0 +1,25 @@
+  - id: Включить светодиод диммера
+    alias: kitchen_enable_dimmer_light
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: input_boolean.legrand_kithen_enable_light
+      to: 'on'
+    action:
+    - service: mqtt.publish
+      data:
+        topic: zigbee2mqtt/0x00047400008c0faa/set
+        payload: "{\"permanent_led\": \"ON\", \"led_when_on\": \"OFF\"}"
+        
+  - id: Выключить светодиод диммера
+    alias: kitchen_disable_dimmer_light
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: input_boolean.legrand_kithen_enable_light
+      to: 'off'
+    action:
+    - service: mqtt.publish
+      data:
+        topic: zigbee2mqtt/0x00047400008c0faa/set
+        payload: "{\"permanent_led\": \"OFF\", \"led_when_on\": \"OFF\"}"

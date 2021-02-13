@@ -55,6 +55,7 @@ telegram_bot:
       - 182901558 # Natasha
       
 #telegram_mybot:
+#  - platform: polling
 #    api_key: !secret bot_tech
 #    allowed_chat_ids:
 #      - -332716958 # tech
@@ -99,6 +100,7 @@ script: !include includes/scripts.yaml
 scene: !include includes/scenes.yaml
 deebot: !include includes/deebot.yaml
 recorder: !include includes/recorder.yaml
+google_assistant: !include includes/google.yaml
 
 # ext dirs
 sensor: !include_dir_merge_list includes/sensor

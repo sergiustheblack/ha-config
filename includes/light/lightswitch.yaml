@@ -9,4 +9,4 @@
     entity_id: switch.balcony_light_ceiling
   - platform: switch
     name: bathroom_light_mirror
-    entity_id: switch.bathroom_relay_switch_l2
+    entity_id: switch.bathroom_light_mirror

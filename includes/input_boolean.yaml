@@ -5,3 +5,6 @@
   test_input:
     name: test switch
     initial: off
+  legrand_kithen_enable_light:
+    name: Включить светодиод
+    initial: on
