@@ -25,6 +25,13 @@ sensor.bathroom_light_mirror_action:
 sensor.bathroom_light_mirror_battery:
   friendly_name: Батарея кнопки
 
+# Aqara temperature, humidity and pressure sensor (WSDCGQ11LM) 0x00158d0005828be1
+sensor.bathroom_climate_humidity_temperature:
+  friendly_name: Температура в ванной
+sensor.bathroom_climate_humidity_humidity:
+  friendly_name: Влажность в ванной
+  
+  
 # Спальня
 # Aqara EU smart plug (SP-EUC01) - розетка под плойку
 
@@ -42,14 +49,30 @@ switch.bedroom_light_ceiling_right:
   friendly_name: Люстра 3
 light.bedroom_light_ceiling_all:
   friendly_name: Люстра
+sensor.bedroom_climate_humidity_temperature:
+  friendly_name: Температура в спальне
+sensor.bedroom_climate_humidity_humidity:
+  friendly_name: Влажность в спальне
   
 # Кухня
 light.kitchen_light_ceiling_switch:
   friendly_name: Люстра
+light.kitchen_light_table_l1:
+  friendly_name: Левый светильник
+light.kitchen_light_table_l2:
+  friendly_name: Правый светильник
+sensor.kitchen_climate_humidity_temperature:
+  friendly_name: Температура в ванной
+sensor.kitchen_climate_humidity_humidity:
+  friendly_name: Влажность в кухне
 
 # Балкон
 light.balcony_light_ceiling:
   friendly_name: Споты
+sensor.balcony_climate_humidity_temperature:
+  friendly_name: Температура на балконе
+sensor.balcony_climate_humidity_humidity:
+  friendly_name: Влажность на балконе
 
 # Пылесос
 binary_sensor.barsik_mop_attached:

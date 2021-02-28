@@ -23,3 +23,67 @@
       data:
         topic: zigbee2mqtt/0x00047400008c0faa/set
         payload: "{\"permanent_led\": \"OFF\", \"led_when_on\": \"OFF\"}"
+        
+  - alias: balcony_button_light_kitchen
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.balcony_button_light_action
+        to: 'double' 
+      - platform: state
+        entity_id: sensor.kitchen_button_lighttable_action
+        to: 'right_double'
+    action:
+      - service: light.toggle
+        entity_id: light.kitchen_light_ceiling_switch
+        
+#  - alias: balcony_button_light_turnoffkitchen
+#    initial_state: true
+#    trigger:
+#      - platform: state
+#        entity_id: sensor.balcony_button_light_action
+#        to: 'long' 
+#    action:
+#      - service: light.turn_off
+#        entity_id: |
+#          {% for state in states.light %}
+#          {% if state.entity_id.split('.')[1].split('_')[0] == 'kitchen' %}
+#          - {{ state.entity_id }}
+#          {% endif %}
+#          {% endfor %}
+  - alias: Переключить левый светильник
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.kitchen_button_lighttable_action
+        to: 'right'
+    action:
+      - service: light.toggle
+        entity_id: light.kitchen_light_table_l1
+  - alias: Переключить правый светильник
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.kitchen_button_lighttable_action
+        to: 'left'
+    action:
+      - service: light.toggle
+        entity_id: light.kitchen_light_table_l2
+  - alias: Переключить светильники стола
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.kitchen_button_lighttable_action
+        to: 'both'
+    action:
+      - service: light.toggle
+        entity_id: light.kitchen_light_table_all
+  - alias: Переключить весь свет
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.kitchen_button_lighttable_action
+        to: 'left_double'
+    action:
+      - service: light.toggle
+        entity_id: light.kitchen_light_all

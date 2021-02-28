@@ -3,3 +3,14 @@
     entities:
       - light.bedroom_light_ceiling_left
       - light.bedroom_light_ceiling_right
+  - platform: group
+    name: kitchen_light_table_all
+    entities:
+      - light.kitchen_light_table_l1
+      - light.kitchen_light_table_l2
+  - platform: group
+    name: kitchen_light_all
+    entities:
+      - light.kitchen_light_table_l1
+      - light.kitchen_light_table_l2
+      - light.kitchen_light_ceiling_switch

@@ -9,6 +9,7 @@
   expose_by_default: true
   entity_config:
     switch.bedroom_curlinghair:
+      expose: true
       name: Плойка
       aliases:
         - curlinghair

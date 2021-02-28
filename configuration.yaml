@@ -31,7 +31,6 @@ mqtt:
   password: !secret mqtt
   
 lovelace:
-  mode: yaml
   resources:
     - url: /hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js
       type: module

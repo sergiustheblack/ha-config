@@ -10,3 +10,9 @@
   - platform: switch
     name: bathroom_light_mirror
     entity_id: switch.bathroom_light_mirror
+  - platform: switch
+    name: kitchen_light_table_l1
+    entity_id: switch.kitchen_light_table_l1
+  - platform: switch
+    name: kitchen_light_table_l2
+    entity_id: switch.kitchen_light_table_l2

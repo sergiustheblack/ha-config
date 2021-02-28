@@ -1,0 +1,9 @@
+  - alias: balcony_button_light_spots
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.balcony_button_light_action
+        to: 'single' 
+    action:
+      - service: light.toggle
+        entity_id: light.balcony_light_ceiling
