@@ -8,4 +8,4 @@ appdaemon
 netdaemon
 www
 .ssh
-zigbee2mqtt/
+zigbee2mqtt/log/

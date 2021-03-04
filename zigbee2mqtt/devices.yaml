@@ -1,0 +1,41 @@
+'0x00158d00044e963e':
+  friendly_name: '0x00158d00044e963e'
+'0x00158d000462fde6':
+  friendly_name: '0x00158d000462fde6'
+'0x04cf8cdf3c79c0ac':
+  friendly_name: '0x04cf8cdf3c79c0ac'
+'0xbc33acfffeae8601':
+  friendly_name: '0xbc33acfffeae8601'
+'0x00047400008c0faa':
+  friendly_name: '0x00047400008c0faa'
+'0x04cf8cdf3c8e10ad':
+  friendly_name: '0x04cf8cdf3c8e10ad'
+'0x00158d0004651c84':
+  friendly_name: '0x00158d0004651c84'
+'0x00158d0005828be1':
+  friendly_name: '0x00158d0005828be1'
+  debounce: 1
+'0x00124b002252b438':
+  friendly_name: '0x00124b002252b438'
+'0x00158d0005225663':
+  friendly_name: '0x00158d0005225663'
+'0x00158d0001d728cb':
+  friendly_name: '0x00158d0001d728cb'
+  debounce: 1
+'0x00158d00019d1bcc':
+  friendly_name: '0x00158d00019d1bcc'
+  debounce: 1
+'0x00158d00056e646f':
+  friendly_name: '0x00158d00056e646f'
+  debounce: 1
+'0x00158d00054eabf1':
+  friendly_name: '0x00158d00054eabf1'
+'0x00158d00056a759e':
+  friendly_name: '0x00158d00056a759e'
+'0x60a423fffe61d13d':
+  friendly_name: '0x60a423fffe61d13d'
+  debounce: 0
+  retrieve_state: false
+'0x60a423fffe620a45':
+  friendly_name: '0x60a423fffe620a45'
+  debounce: 1

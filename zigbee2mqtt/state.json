@@ -1,0 +1,99 @@
+{
+    "0x00158d00044e963e": {
+        "voltage": 3055,
+        "battery": 100
+    },
+    "0x00158d000462fde6": {
+        "state_l1": "OFF",
+        "state_l2": "OFF",
+        "power": 0.07,
+        "consumption": 0,
+        "energy": 0,
+        "temperature": 0,
+        "voltage": 236.1
+    },
+    "0xbc33acfffeae8601": {
+        "state_left": "OFF",
+        "state_right": "OFF"
+    },
+    "0x04cf8cdf3c79c0ac": {
+        "state": "ON",
+        "power": 0
+    },
+    "0x00047400008c0faa": {
+        "state": "OFF",
+        "brightness": 0
+    },
+    "0x04cf8cdf3c8e10ad": {
+        "state": "OFF"
+    },
+    "0x00158d0004651c84": {
+        "voltage": 3045,
+        "battery": 100
+    },
+    "0x00158d0005828be1": {
+        "voltage": 3005,
+        "battery": 100,
+        "temperature": 25.72,
+        "humidity": 31.99,
+        "pressure": 974.9
+    },
+    "0x00124b002252b438": {
+        "pressure": null,
+        "co2": 501
+    },
+    "0x00158d0005225663": {
+        "voltage": 3055,
+        "battery": 100,
+        "contact": false
+    },
+    "0x00158d0001d728cb": {
+        "voltage": 3035,
+        "battery": 100,
+        "temperature": 25.13,
+        "humidity": 32.35,
+        "pressure": 976
+    },
+    "0x00158d00019d1bcc": {
+        "voltage": 3045,
+        "battery": 100,
+        "temperature": 25.86,
+        "humidity": 30.52,
+        "pressure": 973
+    },
+    "0x00158d00056e646f": {
+        "voltage": 3045,
+        "battery": 100,
+        "temperature": 26.11,
+        "humidity": 30.19,
+        "pressure": 974.2
+    },
+    "0x00158d00054eabf1": {
+        "state_l1": "OFF",
+        "state_l2": "OFF",
+        "power": 0.07,
+        "consumption": 0.03,
+        "energy": 0.03,
+        "temperature": 32,
+        "voltage": 233.2
+    },
+    "0x00158d00056a759e": {
+        "voltage": 3195,
+        "battery": 100
+    },
+    "0x60a423fffe61d13d": {
+        "state": "ON",
+        "energy": 1.4,
+        "power_outage_memory": "on",
+        "power": 0,
+        "current": 0,
+        "voltage": 233
+    },
+    "0x60a423fffe620a45": {
+        "state": "ON",
+        "energy": 0.06,
+        "power": 0,
+        "current": 0,
+        "voltage": 233
+    }
+}
