@@ -1,0 +1,22 @@
+  - platform: template
+    sensors:
+      dishwasher:
+        friendly_name: "Посудомойка"
+        value_template: >-
+          {{ states('sensor.bathroom_dev_washer_power')|float > 2 }}
+        icon_template: >-
+          {% if is_state("binary_sensor.dishwasher", "on") %}
+          mdi:dishwasher
+          {% else %}
+          mdi:dishwasher-off
+          {% endif %}  - platform: template
+      washer:
+        friendly_name: "Стиральная машина"
+        value_template: >-
+          {{ states('sensor.bathroom_dev_washer_power')|float > 2 }}
+        icon_template: >-
+          {% if is_state("binary_sensor.washer", "on") %}
+          mdi:washer
+          {% else %}
+          mdi:washer-off
+          {% endif %}

@@ -8,4 +8,5 @@
     name: Test dynamic timer
   bedroom_curlinghair_on:
     name: Плойка включена
-    
+  balcony_temp_leave:
+    name: Рассчетное время отсутствия на балконе

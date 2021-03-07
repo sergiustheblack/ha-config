@@ -87,3 +87,21 @@
     action:
       - service: light.toggle
         entity_id: light.kitchen_light_all
+  
+  # Посудомойка кончила стирать
+  - alias: dishwasher ends cycle
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.dishwasher
+        to: "off"
+        from: "on"
+        for:
+          minutes: 5
+    action:                                                                                                                                                                        
+      - service: notify.telegram
+        data:                                                                                                                                                                      
+          title: "\U0001F37D Посуда вылизана!"
+          message: 'Выньте посуду, котики!'
+        
+  

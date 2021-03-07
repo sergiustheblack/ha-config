@@ -7,3 +7,77 @@
     action:
       - service: light.toggle
         entity_id: light.balcony_light_ceiling
+
+  # Временно уходим с балкона
+  - alias: balcony_leave_watching_tv
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.balcony_window_door_contact
+        to: 'on'
+    condition:
+      condition: 'and'
+      conditions:
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id:  media_player.bravia_4k_ur2
+              state: 'on'
+            - condition: state
+              entity_id: media_player.sony_bravia_tv
+              state: 'on'
+            - condition: state
+              entity_id: media_player.kabinet
+              state: 'on'
+        - condition: state
+          entity_id: light.kitchen_light_all
+          state: 'off'
+        - condition: state
+          entity_id: light.balcony_light_ceiling
+          state: 'off'
+    action:
+      - service: light.turn_on
+        entity_id: light.kitchen_light_ceiling_switch
+      - service: timer.start
+        entity_id: timer.balcony_temp_leave
+        data_template:
+          duration: "{{ states('input_number.balcony_temp_leave') | int }}"
+  # Быстро возвращаемся на балкон      
+  - alias: balcony_back_watching_tv
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.balcony_window_door_contact
+        to: 'off'
+    condition:
+      condition: 'and'
+      conditions:
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id:  media_player.bravia_4k_ur2
+              state: 'on'
+            - condition: state
+              entity_id: media_player.sony_bravia_tv
+              state: 'on'
+            - condition: state
+              entity_id: media_player.kabinet
+              state: 'on'
+        - condition: state
+          entity_id: timer.balcony_temp_leave
+          state: 'active'
+    action:
+      - service: timer.cancel
+        entity_id: timer.balcony_temp_leave
+      - delay:
+          seconds: 30
+      - service: light.turn_off
+        entity_id: light.kitchen_light_all

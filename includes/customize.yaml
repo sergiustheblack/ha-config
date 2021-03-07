@@ -18,6 +18,8 @@ switch.bathroom_light_mirror:
 light.bathroom_light_mirror:
   friendly_name: Светильник
   icon: mdi:mirror
+sensor.balcony_dev_washer_energy:
+  friendly_name: Потребление стиралки
   
 # Aqara D1 single key wireless wall switch (WXKG06LM)
 sensor.bathroom_light_mirror_action:
@@ -53,6 +55,9 @@ sensor.bedroom_climate_humidity_temperature:
   friendly_name: Температура в спальне
 sensor.bedroom_climate_humidity_humidity:
   friendly_name: Влажность в спальне
+
+light.bedroom_light_mirror:
+  friendly_name: Макияжный стол
   
 # Кухня
 light.kitchen_light_ceiling_switch:
@@ -62,9 +67,11 @@ light.kitchen_light_table_l1:
 light.kitchen_light_table_l2:
   friendly_name: Правый светильник
 sensor.kitchen_climate_humidity_temperature:
-  friendly_name: Температура в ванной
+  friendly_name: Температура на кухне
 sensor.kitchen_climate_humidity_humidity:
-  friendly_name: Влажность в кухне
+  friendly_name: Влажность на кухне
+sensor.kitchen_dev_dishwasher_energy:
+  friendly_name: Потребление посудомойки
 
 # Балкон
 light.balcony_light_ceiling:

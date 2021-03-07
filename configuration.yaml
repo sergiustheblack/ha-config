@@ -106,3 +106,4 @@ sensor: !include_dir_merge_list includes/sensor
 automation: !include_dir_merge_list includes/automation
 camera: !include_dir_merge_list includes/cameras
 light: !include_dir_merge_list includes/light
+binary_sensor: !include_dir_merge_list includes/binary_sensor
