@@ -1,6 +1,7 @@
 substitutions:
-  devicename: bedroom_light_mirror
-  switch_name: bedroom_light_mirror
+  devicename: bathroom_dev_vent
+  switch_name: bathroom_dev_vent
+
   
 esphome:
   name: $devicename
@@ -10,7 +11,7 @@ esphome:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-
+  use_address: 192.168.88.101
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   #ap:
   #  ssid: "Bedroom Light Mirror"
@@ -42,7 +43,7 @@ binary_sensor:
       - invert:
       - delayed_off: 10ms
     on_press:
-      - light.toggle: 
+      - fan.toggle: 
           id: $devicename
 
   - platform: gpio
@@ -51,11 +52,11 @@ binary_sensor:
     id: switch_1
     on_press:
       then:
-        - light.turn_on:
+        - fan.turn_on:
             id: $devicename
     on_release:
       then:
-        - light.turn_off:
+        - fan.turn_off:
             id: $devicename
 
 # switch:
@@ -68,12 +69,12 @@ binary_sensor:
     
 output:
   - platform: gpio
-    id: light_relay
+    id: fan_relay
     pin: GPIO12
     
-light:
+fan:
   - platform: binary
     id: $devicename
     name: $switch_name
-    output: light_relay
+    output: fan_relay
   
