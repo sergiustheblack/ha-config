@@ -47,7 +47,7 @@
     action:
       - repeat:
           sequence:
-            - service: notify.telegram_tech
+            - service: notify.telegram
               data:
                 message: |
                   	В спальне течет батарея
