@@ -37,3 +37,26 @@
             - condition: numeric_state
               entity_id: sensor.bedroom_dev_curlinghair_power
               below: "0.1"
+              
+  - alias: Battery leaks in Bedroom
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.bedroom_dev_waterleak_water_leak
+        to: 'on'
+    action:
+      - repeat:
+          sequence:
+            - service: notify.telegram_tech
+              data:
+                message: |
+                  	В спальне течет батарея
+                data:
+                  inline_keyboard:
+                    - "Я оповещен:/ack bedroom_dev_waterleak_water_leak"  # TODO: make combined sensor
+            - delay:
+                minutes: 10
+          until:
+            - condition: state
+              entity_id: binary_sensor.bedroom_dev_waterleak_water_leak
+              state: 'off'

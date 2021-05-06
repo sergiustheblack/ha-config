@@ -10,11 +10,6 @@
   friendly_name: '0x00047400008c0faa'
 '0x04cf8cdf3c8e10ad':
   friendly_name: '0x04cf8cdf3c8e10ad'
-'0x00158d0004651c84':
-  friendly_name: '0x00158d0004651c84'
-'0x00158d0005828be1':
-  friendly_name: '0x00158d0005828be1'
-  debounce: 1
 '0x00124b002252b438':
   friendly_name: '0x00124b002252b438'
 '0x00158d0001d728cb':
@@ -44,6 +39,16 @@
 '0x00158d00044ebe7f':
   friendly_name: '0x00158d00044ebe7f'
 '0x00047400008bac47':
-  friendly_name: '0x00047400008bac47'
+  friendly_name: bathroom_control_main
 '0x00047400002039be':
-  friendly_name: '0x00047400002039be'
+  friendly_name: bathroom_light_ceiling
+'0x00158d0004651c84':
+  friendly_name: '0x00158d0004651c84'
+'0x00158d0004a07905':
+  friendly_name: '0x00158d0004a07905'
+'0x00158d0005828be1':
+  friendly_name: '0x00158d0005828be1'
+'0x04cf8cdf3c77cc98':
+  friendly_name: bathroom_control_main2
+'0x00158d0006722f94':
+  friendly_name: bedroom_dev_waterleak

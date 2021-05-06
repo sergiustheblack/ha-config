@@ -1,1 +1,4 @@
-{}
+'1':
+  friendly_name: test_light_bathroom
+  devices:
+    - 0x00158d000462fde6/2

@@ -1,12 +1,36 @@
-  - alias: bathroom_toggle_light_mirror
+  - alias: bathroom_on_light_mirror
     initial_state: true
     trigger:
       - platform: state
         entity_id: sensor.bathroom_light_mirror_action
         to: 'single' 
+      - platform: state
+        entity_id: sensor.bathroom_control_main2_action
+        to: button_4_double
+    condition:
+      - condition: state
+        entity_id: light.bathroom_light_mirror_2
+        state: 'off'
     action:
-      - service: switch.toggle
-        entity_id: switch.bathroom_light_mirror
+      - service: light.turn_on
+        entity_id: light.bathroom_light_mirror_2
+
+  - alias: bathroom_off_light_mirror
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.bathroom_light_mirror_action
+        to: 'single' 
+      - platform: state
+        entity_id: sensor.bathroom_control_main2_action
+        to: 'button_3_double'
+    condition:
+      - condition: state
+        entity_id: light.bathroom_light_mirror_2
+        state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.bathroom_light_mirror_2
 
   - alias: bathroom_start_timer
     initial_state: true
@@ -49,7 +73,73 @@
       - service: switch.turn_off
         entity_id: switch.bathroom_light_mirror
         
+  - alias: turn on fan in bathroom
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.bathroom_control_main_action
+        to: on_left
+      - platform: state
+        entity_id: sensor.bathroom_control_main2_action
+        to: button_4_single
+      - platform: state
+        entity_id: sensor.bathroom_light_mirror_action
+        to: 'double' 
+    condition:
+      - condition: state
+        entity_id: fan.bathroom_dev_vent
+        state: 'off'
+    action:
+      - service: fan.turn_on
+        entity_id: fan.bathroom_dev_vent
+
+  - alias: turn off fan in bathroom
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.bathroom_control_main_action
+        to: off_left
+      - platform: state
+        entity_id: sensor.bathroom_control_main2_action
+        to: button_3_single
+      - platform: state
+        entity_id: sensor.bathroom_light_mirror_action
+        to: 'double' 
+    condition:
+      - condition: state
+        entity_id: fan.bathroom_dev_vent
+        state: 'on'
+    action:
+      - service: fan.turn_off
+        entity_id: fan.bathroom_dev_vent
         
-        
-        
+  - alias: turn on fan in bathroom by humidity
+    initial_state: true
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.bathroom_climate_humidity_humidity
+        above: 60
+    condition:
+      - condition: state
+        entity_id: fan.bathroom_dev_vent
+        state: 'off'
+    action:
+      - service: fan.turn_on
+        entity_id: fan.bathroom_dev_vent
+
+  - alias: turn off fan in bathroom by humidity
+    initial_state: true
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.bathroom_climate_humidity_humidity
+        above: 40
+        for:
+          minutes: 5
+    condition:
+      - condition: state
+        entity_id: fan.bathroom_dev_vent
+        state: 'on'
+    action:
+      - service: fan.turn_off
+        entity_id: fan.bathroom_dev_vent
         
