@@ -1,24 +1,26 @@
 {
+    "1": {
+        "state": "OFF"
+    },
     "0x00158d00044e963e": {
-        "voltage": 3045,
+        "voltage": 3075,
         "battery": 100
     },
     "0x00158d000462fde6": {
         "state_l1": "OFF",
         "state_l2": "OFF",
         "power": 0.01,
-        "consumption": 1.8,
-        "energy": 1.8,
-        "temperature": 38,
-        "voltage": 235.9
-    },
-    "0xbc33acfffeae8601": {
-        "state_left": "ON",
-        "state_right": "OFF"
+        "consumption": 0.41,
+        "energy": 0.41,
+        "temperature": 44,
+        "voltage": 233.6
     },
     "0x04cf8cdf3c79c0ac": {
         "state": "ON",
-        "power": 0
+        "power": 0,
+        "update": {
+            "state": "available"
+        }
     },
     "0x00047400008c0faa": {
         "state": "OFF",
@@ -29,90 +31,65 @@
     },
     "0x00124b002252b438": {
         "pressure": 0,
-        "co2": 640,
+        "co2": 575,
         "temperature": 0,
-        "humidity": 0
-    },
-    "0x00158d0001d728cb": {
-        "voltage": 3005,
-        "battery": 100,
-        "temperature": 25.89,
-        "humidity": 41.61,
-        "pressure": 989
+        "humidity": 0,
+        "led_feedback": "OFF"
     },
     "0x00158d00019d1bcc": {
-        "voltage": 3025,
+        "voltage": 3055,
         "battery": 100,
-        "temperature": 21.76,
-        "humidity": 41.91,
-        "pressure": 981.2
-    },
-    "0x00158d00056e646f": {
-        "voltage": 3025,
-        "battery": 100,
-        "temperature": 27.02,
-        "humidity": 41.98,
-        "pressure": 985
+        "temperature": 29.75,
+        "humidity": 52.04,
+        "pressure": 982.6
     },
     "0x00158d00054eabf1": {
         "state_l1": "OFF",
         "state_l2": "OFF",
-        "power": 0.04,
-        "consumption": 0.43,
-        "energy": 0.43,
-        "temperature": 32,
-        "voltage": 235.6
+        "power": 0.06,
+        "consumption": 0.05,
+        "energy": 0.05,
+        "temperature": 38,
+        "voltage": 234.3
     },
     "0x00158d00056a759e": {
-        "voltage": 3085,
+        "voltage": 3075,
         "battery": 100
     },
     "0x60a423fffe61d13d": {
         "state": "ON",
-        "energy": 26.4,
+        "energy": 40.77,
         "power_outage_memory": "on",
         "power": 0,
         "current": 0,
-        "voltage": 236
+        "voltage": 235
     },
     "0x60a423fffe620a45": {
         "state": "ON",
-        "energy": 4.45,
-        "power": 0,
-        "current": 0,
-        "voltage": 236
+        "energy": 6.76,
+        "power": 2,
+        "current": 0.03,
+        "voltage": 235
     },
     "0x00158d0005225663": {
-        "voltage": 3015,
+        "voltage": 3045,
         "battery": 100,
-        "contact": true
+        "contact": false
     },
     "0x00158d00044ebe7f": {
-        "voltage": 3055,
+        "voltage": 3045,
         "battery": 100,
-        "contact": true
+        "contact": false
     },
     "0x00047400008bac47": {
-        "voltage": 3000
+        "voltage": 3100
     },
     "0x00047400002039be": {
         "state": "OFF"
     },
     "0x00158d0004651c84": {
-        "voltage": 3035,
+        "voltage": 3045,
         "battery": 100
-    },
-    "0x00158d0004a07905": {
-        "state_left": "OFF",
-        "state_right": "OFF",
-        "operation_mode_left": "decoupled"
-    },
-    "0x00158d0005828be1": {
-        "voltage": 3015,
-        "battery": 100,
-        "temperature": 25.93,
-        "humidity": 41.17,
-        "pressure": 982.4
     },
     "0x04cf8cdf3c77cc98": {
         "battery": 100,
@@ -120,10 +97,50 @@
         "operation_mode": "command"
     },
     "0x00158d0006722f94": {
-        "voltage": 3055,
+        "voltage": 3025,
         "battery": 100,
         "water_leak": false,
         "tamper": false,
         "battery_low": false
+    },
+    "0x00158d0005828be1": {
+        "voltage": 3025,
+        "battery": 100,
+        "temperature": 31.34,
+        "humidity": 48.24,
+        "pressure": 983
+    },
+    "0x00158d0001d728cb": {
+        "voltage": 3025,
+        "battery": 100,
+        "temperature": 30.11,
+        "humidity": 49.64,
+        "pressure": 984.6
+    },
+    "0x00158d00056e646f": {
+        "voltage": 3025,
+        "battery": 100,
+        "temperature": 26.24,
+        "humidity": 32.39,
+        "pressure": 984
+    },
+    "0x00158d00044ebe88": {
+        "voltage": 3025,
+        "battery": 100,
+        "contact": false
+    },
+    "0x00047400009cf1fa": {
+        "state": "OFF",
+        "brightness": 0
+    },
+    "0x00047400009cf1ed": {
+        "state": "OFF",
+        "brightness": 0
+    },
+    "0x54ef4410000f357f": {
+        "state_right": "OFF",
+        "state_left": "ON",
+        "power_outage_memory": true,
+        "operation_mode": "control_relay"
     }
 }

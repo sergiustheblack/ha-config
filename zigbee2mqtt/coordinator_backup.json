@@ -1,350 +1,145 @@
 {
-  "adapterType": "zStack",
-  "time": "Thu, 06 May 2021 15:31:09 GMT",
-  "meta": {
-    "product": 1
-  },
-  "data": {
-    "ZCD_NV_EXTADDR": {
-      "id": 1,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        76,
-        28,
-        129,
-        34,
-        0,
-        75,
-        18,
-        0
-      ],
-      "len": 8
-    },
-    "ZCD_NV_NIB": {
-      "id": 33,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        30,
-        5,
-        2,
-        51,
-        20,
-        51,
-        0,
-        30,
-        0,
-        0,
-        0,
-        1,
-        5,
-        1,
-        143,
-        0,
-        7,
-        0,
-        2,
-        5,
-        30,
-        0,
-        0,
-        0,
-        11,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        99,
-        26,
-        8,
-        0,
-        0,
-        8,
-        0,
-        0,
-        15,
-        15,
-        4,
-        0,
-        1,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        15,
-        3,
-        0,
-        1,
-        120,
-        10,
-        1,
-        0,
-        0,
-        0,
-        187,
-        37,
-        0,
-        0
-      ],
-      "len": 116
-    },
-    "ZCD_NV_PANID": {
-      "id": 131,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        99,
-        26
-      ],
-      "len": 2
-    },
-    "ZCD_NV_EXTENDED_PAN_ID": {
-      "id": 45,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221
-      ],
-      "len": 8
-    },
-    "ZCD_NV_NWK_ACTIVE_KEY_INFO": {
-      "id": 58,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        0,
-        0,
-        3,
-        5,
-        7,
-        12,
-        11,
-        13,
-        15,
-        1,
-        2,
-        4,
-        6,
-        8,
-        10,
-        7,
-        13
-      ],
-      "len": 17
-    },
-    "ZCD_NV_NWK_ALTERN_KEY_INFO": {
-      "id": 59,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        0,
-        0,
-        3,
-        5,
-        7,
-        12,
-        11,
-        13,
-        15,
-        1,
-        2,
-        4,
-        6,
-        8,
-        10,
-        7,
-        13
-      ],
-      "len": 17
-    },
-    "ZCD_NV_APS_USE_EXT_PANID": {
-      "id": 71,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "len": 8
-    },
-    "ZCD_NV_PRECFGKEY": {
-      "id": 98,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        0,
-        3,
-        5,
-        7,
-        12,
-        11,
-        13,
-        15,
-        1,
-        2,
-        4,
-        6,
-        8,
-        10,
-        7,
-        13
-      ],
-      "len": 16
-    },
-    "ZCD_NV_PRECFGKEY_ENABLE": {
-      "id": 99,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        0
-      ],
-      "len": 1
-    },
-    "ZCD_NV_CHANLIST": {
-      "id": 132,
-      "offset": 0,
-      "osal": true,
-      "product": -1,
-      "value": [
-        0,
-        8,
-        0,
-        0
-      ],
-      "len": 4
-    },
-    "ZCD_NV_EX_TCLK_TABLE": {
-      "sysid": 1,
-      "itemid": 4,
-      "subid": 0,
-      "product": 1,
-      "osal": false,
-      "offset": 0,
-      "value": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        255,
-        0,
-        0,
-        0
-      ],
-      "len": 20
-    },
-    "ZCD_NV_EX_NWK_SEC_MATERIAL_TABLE": {
-      "sysid": 1,
-      "itemid": 7,
-      "subid": 0,
-      "product": 1,
-      "osal": false,
-      "offset": 0,
-      "value": [
-        84,
-        54,
-        19,
-        0,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221,
-        221
-      ],
-      "len": 12
+  "metadata": {
+    "format": "zigpy/open-coordinator-backup",
+    "version": 1,
+    "source": "zigbee-herdsman@0.13.117",
+    "internal": {
+      "date": "2021-07-18T20:06:47.405Z",
+      "znpVersion": 1
     }
-  }
+  },
+  "stack_specific": {
+    "zstack": {
+      "tclk_seed": "3fc5c9b1d5358063756e232513f51c7e"
+    }
+  },
+  "coordinator_ieee": "00124b0022811c4c",
+  "pan_id": "1a63",
+  "extended_pan_id": "dddddddddddddddd",
+  "nwk_update_id": 0,
+  "security_level": 5,
+  "channel": 11,
+  "channel_mask": [
+    11
+  ],
+  "network_key": {
+    "key": "000305070c0b0d0f01020406080a070d",
+    "sequence_number": 0,
+    "frame_counter": 2642854
+  },
+  "devices": [
+    {
+      "nwk_address": "16ae",
+      "ieee_address": "04cf8cdf3c8e10ad"
+    },
+    {
+      "nwk_address": "b415",
+      "ieee_address": "04cf8cdf3c79c0ac",
+      "link_key": {
+        "key": "1d154cbcbcf9a12789d38c20a1b30acd",
+        "rx_counter": 0,
+        "tx_counter": 253
+      }
+    },
+    {
+      "nwk_address": "f27c",
+      "ieee_address": "bc33acfffeae8601",
+      "link_key": {
+        "key": "1df8913b361de68981e5db90dc892049",
+        "rx_counter": 0,
+        "tx_counter": 253
+      }
+    },
+    {
+      "nwk_address": "4930",
+      "ieee_address": "00047400008c0faa",
+      "link_key": {
+        "key": "d43049c9b1a13180c97ae2232567f11c",
+        "rx_counter": 0,
+        "tx_counter": 253
+      }
+    },
+    {
+      "nwk_address": "d64f",
+      "ieee_address": "00158d0004651c84"
+    },
+    {
+      "nwk_address": "5c2a",
+      "ieee_address": "04cf8cdf3c77cc98",
+      "link_key": {
+        "key": "84b248f9163d1a3118af0252fca9dcf1",
+        "rx_counter": 0,
+        "tx_counter": 44
+      }
+    },
+    {
+      "nwk_address": "2d27",
+      "ieee_address": "00158d0004a07905"
+    },
+    {
+      "nwk_address": "938a",
+      "ieee_address": "00158d0006722f94"
+    },
+    {
+      "nwk_address": "7aad",
+      "ieee_address": "60a423fffe61d13d",
+      "link_key": {
+        "key": "48bf42dbecd6b81e0214a84f2a162403",
+        "rx_counter": 0,
+        "tx_counter": 242
+      }
+    },
+    {
+      "nwk_address": "7fb6",
+      "ieee_address": "60a423fffe620a45",
+      "link_key": {
+        "key": "601997e2811c61a9f4df577e9c56ca43",
+        "rx_counter": 0,
+        "tx_counter": 198
+      }
+    },
+    {
+      "nwk_address": "ebd6",
+      "ieee_address": "00158d0005225663"
+    },
+    {
+      "nwk_address": "c4f2",
+      "ieee_address": "00158d00044ebe7f"
+    },
+    {
+      "nwk_address": "ee5e",
+      "ieee_address": "00047400008bac47"
+    },
+    {
+      "nwk_address": "2980",
+      "ieee_address": "00158d0001d728cb"
+    },
+    {
+      "nwk_address": "b524",
+      "ieee_address": "54ef4410000f357f",
+      "link_key": {
+        "key": "5c101cf50c3ad091b684da3590279a3a",
+        "rx_counter": 0,
+        "tx_counter": 11
+      }
+    },
+    {
+      "nwk_address": "e89e",
+      "ieee_address": "00047400009cf1fa",
+      "link_key": {
+        "key": "dfe2691c7e4bc1c94b24a98063016a23",
+        "rx_counter": 0,
+        "tx_counter": 0
+      }
+    },
+    {
+      "nwk_address": "8ff6",
+      "ieee_address": "00047400009cf1ed",
+      "link_key": {
+        "key": "6d92e96e235117f5f18fa3c5c9c5d135",
+        "rx_counter": 0,
+        "tx_counter": 0
+      }
+    }
+  ]
 }
