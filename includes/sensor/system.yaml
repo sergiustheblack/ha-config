@@ -45,5 +45,5 @@
   # bad login count
   - platform: command_line
     name: badlogin
-    command: grep -c 'Login attempt' /config/home-assistant.log
-    value_template: '{{ value | int - 1 }}'
+    command: grep -v 'grep' /config/home-assistant.log  | egrep -c 'Login attempt'
+    value_template: '{{ value | int }}'

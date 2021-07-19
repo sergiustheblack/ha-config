@@ -81,6 +81,14 @@ sensor.balcony_climate_humidity_temperature:
 sensor.balcony_climate_humidity_humidity:
   friendly_name: Влажность на балконе
 
+# Кладовая
+light.cloakroom_light_ceiling:
+  friendly_name:  Люстра
+  
+# Коридор
+light.hall_light_ceiling:
+  friendly_name: Люстра
+  
 # Пылесос
 binary_sensor.barsik_mop_attached:
   friendly_name: Установлен бак с водой

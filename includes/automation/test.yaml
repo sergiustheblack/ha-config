@@ -10,13 +10,4 @@
           duration: "{{ states('input_number.test_input') | int }}"
       - service: notify.telegram_tech
         data:
-         message: "\U000026A1 Заряд батареи всего {{ states('sensor.ups_battery') }}"
-
-  - alias: test bathroom 1
-    trigger:
-      platform: state
-      entity_id: "sensor.0x00158d0004a07905_action"
-      to: "single_left"
-    action:
-      - service: switch.toggle
-        entity_id: switch.bathroom_light_ceiling
+         message: "\U000026A1 Заряд батареи всего {{ states('sensor.apc_battery_charge') }}"

@@ -35,10 +35,6 @@ lovelace:
     - url: /hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js
       type: module
 
-apcupsd:
-  host: a722577e-apcupsd
-  port: 3551
-
 weather:
   - platform: yandex_weather
     api_key: !secret yandex_api_key
@@ -97,7 +93,7 @@ input_text: !include includes/input_text.yaml
 group: !include includes/groups.yaml
 script: !include includes/scripts.yaml
 scene: !include includes/scenes.yaml
-deebot: !include includes/deebot.yaml
+#deebot: !include includes/deebot.yaml
 recorder: !include includes/recorder.yaml
 google_assistant: !include includes/google.yaml
 

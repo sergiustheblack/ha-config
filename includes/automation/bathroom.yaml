@@ -143,3 +143,18 @@
       - service: fan.turn_off
         entity_id: fan.bathroom_dev_vent
         
+  # Стиралка кончила стирать
+  - alias: washing machine ends cycle
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.washer
+        to: "off"
+        from: "on"
+        for:
+          minutes: 5
+    action:                                                                                                                                                                        
+      - service: notify.telegram
+        data:                                                                                                                                                                      
+          title: "Стирка окончена!"
+          message: 'Выньте белье, котики!'

@@ -1,8 +1,8 @@
-  - alias: 'Notify when UPS goes on battery'
+  - alias: 'Notify when apc goes on battery'
     initial_state: true
     trigger:
       - platform: state
-        entity_id: sensor.ups_status
+        entity_id: sensor.apc_status
         from: 'ONLINE'
         to: 'ONBATT'
     action:
@@ -11,11 +11,11 @@
         data:
          message: "\U000026A1 Пропало напряжение в сети. Время: {{ states('sensor.time_date') }}"
   
-  - alias: 'Notify when UPS goes on ac'
+  - alias: 'Notify when apc goes on ac'
     initial_state: true
     trigger:
       - platform: state
-        entity_id: sensor.ups_status
+        entity_id: sensor.apc_status
         from: 'ONBATT'
         to: 'ONLINE'
     action:
@@ -23,16 +23,16 @@
         data:
          message: "\U0000267B Восстановлено напряжение в сети. Время: {{ states('sensor.time_date') }}"
          
-  - alias: 'Notify when UPS on low battery'
+  - alias: 'Notify when apc on low battery'
     initial_state: true
     trigger:
       - platform: numeric_state
-        entity_id: sensor.ups_battery
+        entity_id: sensor.apc_battery
         below: 15
     action:
       - service: notify.telegram_tech
         data:
-         message: "\U000026A1 Заряд батареи всего: {{ states('sensor.ups_battery') }}"
+         message: "\U000026A1 Заряд батареи всего: {{ states('sensor.apc_battery_charge') }}"
          
          
          
