@@ -31,9 +31,101 @@
         data:
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: |
+          message: &light_msg |
             {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+      - service: telegram_bot.edit_message
+        data: &msg_after_action
+          inline_message_id: '{{ trigger.event.data.message.message_id }}'
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          chat_id: '{{ trigger.event.data.chat_id }}'
+          message: |
+            {%- set selected_room = (trigger.event.data["args"] | first).split('_') | first %}
+            {%- set known_types = ["power", "temperature", "consumption"] %}
+            {%- set sensor_type_map = [
+              {"power": "\U000026A1"},
+              {"battery": "\U0001F50B"},
+              {"temperature": "\U0001F321"},
+              {"consumption": "\U000026A1\U000023F3"}
+            ]
+            %}
+            {%- macro type_to_emoji(type) %}
+            {{ (sensor_type_map | map(attribute=type) | select('string') | list)[0] }}
+            {%- endmacro %}
+            
+            {%- for entity in states.sensor %}
+            {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
+            {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
+            {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
+            {%- set device = entity.entity_id.split(".")[1].split("_")[0:2] | join("_") %}
+            {%- if room == selected_room %}
+            {%- if type in known_types -%}
+            {{ type_to_emoji(type) }}{{ entity.attributes.get('friendly_name') | replace("_","\_")}}: {{ entity.state }} {{ entity.attributes.get("unit_of_measurement") }}
+            {%- endif %}
+            {%- endif %}
+            {%- endfor %}
+            
+            {# Выключатели #}
+            {%- set light_map = [
+                {"on": "\U0001F4A1"},
+                {"off": "\U000026AA"},
+              ]
+            %}
+            {%- set switch_map = [
+              {"on": "\U00002705	"},
+              {"off": "\U000026AA"},
+            ]
+            %}
+              
+              {%- macro light_status(type) -%}
+              {{ (light_map | map(attribute=type) | select('string') | list)[0] }}
+              {%- endmacro %}
+              {%- macro switch_status(type) -%}
+              {{ (switch_map | map(attribute=type) | select('string') | list)[0] }}
+              {%- endmacro %}
+              
+            {%- set nm = namespace(str="") %}
+            {%- for entity in states.switch | list + states.light | list %}
+            {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
+            {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
+            {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
+            {%- set device = entity.entity_id.split(".")[1] %}
+            {%- if room == selected_room -%}
+              {%- if entity.domain == "light" -%}
+                {{ entity.attributes.get("friendly_name") | replace("_","\_") ~ light_status(entity.state) }}
+              {%- else %}
+                {%- if entity.domain != "light" and dom != "light" %}
+                  {{ entity.attributes.get('friendly_name') | replace("_","\_") ~ switch_status(entity.state) }}
+                {%- endif %}
+              {%- endif %}
+            {%- endif %}
+            {%- endfor %}
+      - service: telegram_bot.edit_replymarkup
+        data: &markup_after_action
+          inline_message_id: '{{ trigger.event.data.message.message_id }}'
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          chat_id: '{{ trigger.event.data.chat_id }}'
+          inline_keyboard: 
+            - |
+              {%- set selected_room = (trigger.event.data["args"] | first).split('_') | first %}
+              {%- set nm = namespace(str="") %}
+              {%- for entity in states.switch | list + states.light | list %}
+              {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
+              {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
+              {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
+              {%- set device = entity.entity_id.split(".")[1] %}
+              {%- if room == selected_room -%}
+              {%- if entity.domain == 'switch' and dom != 'light' -%}
+              {%- set nm.str = nm.str ~ "," ~  entity.attributes.get('friendly_name') | replace("_","\_") ~ ":/switchtoggle " ~ device ~ " " ~ room %}
+              {%- elif entity.domain == 'light' -%}
+              {%- set nm.str = nm.str ~ "," ~  entity.attributes.get('friendly_name') | replace("_","\_") ~ ":/lighttoggle " ~ device ~ " " ~ room %}
+              {%- endif %}
+              {%- endif %}
+              {%- endfor %}
+              {{ nm.str.split(",")[1:] | join(", ")}}
+            - "Назад:/start"
         
   - alias: 'Turn on light call'
     trigger:
@@ -54,9 +146,8 @@
         data:
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+          message: *light_msg
+
             
   - alias: 'TG Toggle light call'
     trigger:
@@ -71,15 +162,22 @@
       - service: light.toggle
         data_template:
           entity_id: '{{ "light." ~ trigger.event.data["args"] | first | string }}'
-      - delay:
-          seconds: '0.5'
       - service: telegram_bot.answer_callback_query
         data:
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+          message: ' msg {{ trigger.event.data["args"] | first | string }}'
+  #    - wait:
+  #        wait_template: '{{ states["light." ~ (trigger.event.data["args"] | first | string)].last_changed < utcnow() }}'
+      - service: telegram_bot.answer_callback_query
+        data:
+          target: '{{ trigger.event.data.chat_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          message: *light_msg
+      - service: telegram_bot.edit_message
+        data: *msg_after_action
+      - service: telegram_bot.edit_replymarkup
+        data: *markup_after_action
             
   - alias: 'Turn off light'
     trigger:
@@ -99,9 +197,7 @@
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+          message: *light_msg
         
   - alias: 'Turn on light'
     trigger:
@@ -121,9 +217,7 @@
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+          message: *light_msg
             
   - alias: 'TG Toggle light'
     trigger:
@@ -143,9 +237,7 @@
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["light." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+          message: *light_msg
             
 # Switch control
   - alias: 'Turn off switch call'
@@ -167,7 +259,7 @@
         data:
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: |
+          message: &switch_msg |
             {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
             {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
         
@@ -190,9 +282,7 @@
         data:
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+          message: *switch_msg
             
   - alias: 'TG Toggle switch call'
     trigger:
@@ -213,9 +303,7 @@
         data:
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name }}: {{ sw.state | upper }}
+          message: *switch_msg
           
   - alias: 'Turn off switch'
     trigger:
@@ -235,9 +323,7 @@
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+          message: *switch_msg
         
   - alias: 'Turn on switch'
     trigger:
@@ -257,9 +343,7 @@
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+          message: *switch_msg
             
   - alias: 'TG Toggle switch'
     trigger:
@@ -279,9 +363,7 @@
       - service: telegram_bot.send_message
         data:
           target: '{{ trigger.event.data.chat_id }}'
-          message: |
-            {%- set sw = states["switch." ~ trigger.event.data["args"] | first] %}
-            {{ sw.attributes.friendly_name | replace('_','\_') }}: {{ sw.state | upper }}
+          message: *switch_msg
           
 # Info callback          
   - alias: 'Get item status'
@@ -417,35 +499,40 @@
           target: '{{ trigger.event.data.chat_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
           message: 'Мьяу!'
-          inline_keyboard:
+          inline_keyboard: &tg_start
             - |
               {%- set emoji_room = 
-                [
-                  {"bedroom": "\U0001F6CF"}, 
-                  {"bathroom": "\U0001F6C1"},
-                  {"cloakroom": "\U0001F9F3"},
-                  {"kitchen": "\U0001F37D"},
-                  {"hall": "\U0001F6AA"},
-                  {"balcony": "\U0001F3AC"}
-                ] 
+                {
+                  "bedroom": "\U0001F6CF", 
+                  "bathroom": "\U0001F6C1",
+                  "cloakroom": "\U0001F9F3",
+                  "kitchen": "\U0001F37D",
+                  "hall": "\U0001F6AA",
+                  "balcony": "\U0001F3AC"
+                }
               %}
               
               {%- macro to_emoji_room(room) -%}
-              {{ (emoji_room | map(attribute=room) | select('string') | list)[0] }}
+              {{ emoji_room.get(room, "default") }}
               {%- endmacro %}
               
               {%- set nm = namespace(str = '') %}
               {%- for entity in states.switch %}
               {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
+              {%- if name in emoji_room %}
               {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
+              {%- endif %}
               {%- endfor %}
               {%- for entity in states.light %}
               {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
+              {%- if name in emoji_room %}
               {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
+              {%- endif %}
               {%- endfor %}
               {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
               {{ nm.lst | join(", ") }}
-            - "Погода:/weather" 
+            - "Погода:/weather"
+            - "Скорость интернета:/speedtest"
             
   - alias: 'TG Start Callback'
     trigger:
@@ -461,35 +548,7 @@
           callback_query_id: '{{ trigger.event.data.id }}'
           chat_id: '{{ trigger.event.data.chat_id }}'
           message: 'Мьяу!'
-          inline_keyboard:
-            - |
-              {%- set emoji_room = 
-                [
-                  {"bedroom": "\U0001F6CF"}, 
-                  {"bathroom": "\U0001F6C1"},
-                  {"cloakroom": "\U0001F9F3"},
-                  {"kitchen": "\U0001F37D"},
-                  {"hall": "\U0001F6AA"},
-                  {"balcony": "\U0001F3AC"}
-                ] 
-              %}
-              
-              {%- macro to_emoji_room(room) -%}
-              {{ (emoji_room | map(attribute=room) | select('string') | list)[0] }}
-              {%- endmacro %}
-              
-              {%- set nm = namespace(str = '') %}
-              {%- for entity in states.switch %}
-              {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
-              {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
-              {%- endfor %}
-              {%- for entity in states.light %}
-              {%- set name = entity.entity_id.split(".")[1].split("_")[0] %}
-              {%- set nm.str = nm.str ~ ',' ~ to_emoji_room(name) ~ ":/room " ~ name %}
-              {%- endfor %}
-              {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
-              {{ nm.lst | join(", ") }}
-            - "Погода:/weather" 
+          inline_keyboard: *tg_start
             
   - alias: 'TG Expand room'
     trigger:
@@ -598,7 +657,27 @@
               {%- endfor %}
               {{ nm.str.split(",")[1:] | join(", ")}}
             - "Назад:/start"
-            
+
+  - alias: TG Speedtest
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: "/speedtest"
+    action:
+      - service: speedtestdotnet.speedtest
+      - service: telegram_bot.edit_message
+        data:
+          inline_message_id: '{{ trigger.event.data.message.message_id }}'
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          chat_id: '{{ trigger.event.data.chat_id }}'
+          message: |
+            Скорость загрузки {{ states('sensor.speedtest_download') }}
+            Скорость отдачи {{ states('sensor.speedtest_upload') }}
+            Пинг {{ states('sensor.speedtest_ping') }}
+          inline_keyboard: *tg_start
+          
   - alias: 'TG TEST'
     trigger:
       - platform: event

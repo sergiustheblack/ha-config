@@ -30,7 +30,7 @@
               entity_id:  media_player.bravia_4k_ur2
               state: 'on'
             - condition: state
-              entity_id: media_player.sony_bravia_tv
+              entity_id: remote.sony_bravia_tv
               state: 'on'
             - condition: state
               entity_id: media_player.kabinet
@@ -70,7 +70,7 @@
               entity_id:  media_player.bravia_4k_ur2
               state: 'on'
             - condition: state
-              entity_id: media_player.sony_bravia_tv
+              entity_id: remote.sony_bravia_tv
               state: 'on'
             - condition: state
               entity_id: media_player.kabinet

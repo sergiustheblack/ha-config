@@ -9,11 +9,11 @@
         to: button_4_double
     condition:
       - condition: state
-        entity_id: light.bathroom_light_mirror_2
+        entity_id: light.bathroom_light_mirror
         state: 'off'
     action:
       - service: light.turn_on
-        entity_id: light.bathroom_light_mirror_2
+        entity_id: light.bathroom_light_mirror
 
   - alias: bathroom_off_light_mirror
     initial_state: true
@@ -26,11 +26,11 @@
         to: 'button_3_double'
     condition:
       - condition: state
-        entity_id: light.bathroom_light_mirror_2
+        entity_id: light.bathroom_light_mirror
         state: 'on'
     action:
       - service: light.turn_off
-        entity_id: light.bathroom_light_mirror_2
+        entity_id: light.bathroom_light_mirror
 
   - alias: bathroom_start_timer
     initial_state: true

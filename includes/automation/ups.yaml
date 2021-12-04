@@ -27,7 +27,7 @@
     initial_state: true
     trigger:
       - platform: numeric_state
-        entity_id: sensor.apc_battery
+        entity_id: sensor.apc_battery_charge
         below: 15
     action:
       - service: notify.telegram_tech
