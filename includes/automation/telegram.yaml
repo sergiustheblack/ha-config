@@ -533,6 +533,7 @@
               {{ nm.lst | join(", ") }}
             - "Погода:/weather"
             - "Скорость интернета:/speedtest"
+            - "Пылесос:/vacuum"
             
   - alias: 'TG Start Callback'
     trigger:
@@ -678,6 +679,98 @@
             Пинг {{ states('sensor.speedtest_ping') }}
           inline_keyboard: *tg_start
           
+# Пылесос 
+  - alias: Vacuum Menu
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: "/vacuum"
+    action:
+      - service: telegram_bot.edit_message
+        data:
+          inline_message_id: '{{ trigger.event.data.message.message_id }}'
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          chat_id: '{{ trigger.event.data.chat_id }}'
+          message: |
+            ""
+          inline_keyboard:
+            - "Убрать дом:/clean all"
+            - |
+              {%- set emoji_room = 
+                {
+                  "bedroom": "\U0001F6CF", 
+                  "bathroom": "\U0001F6C1",
+                  "storeroom": "\U0001F9F3",
+                  "kitchen": "\U0001F37D",
+                  "corridor": "\U0001F6AA"
+                }
+              %}
+              
+              {%- macro to_emoji_room(room) -%}
+              {{ emoji_room.get(room, "default") }}
+              {%- endmacro %}
+              
+              {%- set nm = namespace(str = '') %}
+              {%- for room, pic in emoji_room.items() %}
+              {%- set nm.str = nm.str ~ ',' ~ pic ~ ":/clean " ~ room %}
+              {%- endfor %}
+              {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
+              {{ nm.lst | join(", ") }}
+            - |
+              {%- set power = 
+                {
+                    "Max": "max+",
+                    "Средняя": "normal",
+                    "Низкая": "max",
+                    "0": "quiet"
+                }
+              %}
+              {%- set nm = namespace(str = '') %}
+              {%- for power_alias, mode in power.items() %}
+              {%- set nm.str = nm.str ~ ',' ~ "\U0001F9BE " ~ power_alias ~ ":/vacuum_set power " ~ mode %}
+              {%- endfor %}
+              {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
+              {{ nm.lst | join(", ") }}
+            - |
+              {%- set water = 
+                {
+                    "0": "low",
+                    "Мало": "medium",
+                    "Много": "high",
+                    "Max": "ultrahigh"
+                }
+              %}
+              {%- set nm = namespace(str = '') %}
+              {%- for water_alias, mode in water.items() %}
+              {%- set nm.str = nm.str ~ ',' ~ "\U0001F4A6 " ~ water_alias ~ ":/vacuum_set water " ~ mode %}
+              {%- endfor %}
+              {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
+              {{ nm.lst | join(", ") }}
+            - Назад:/start
+          
+  - alias: Vacuum Clean
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: "/clean"
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data["args"] | length > 0 }}'
+    action:
+      - service: vacuum.send_command
+        target:
+          entity_id: vacuum.barsik
+        data:
+          command: spot_area
+          params:
+            rooms: '{{ states.vacuum.barsik.attributes["room_" ~ trigger.event.data["args"][1]] }}'
+            cleanings: 1
+          
+# Конец пылесоса
+
   - alias: 'TG TEST'
     trigger:
       - platform: event
