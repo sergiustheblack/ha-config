@@ -60,3 +60,154 @@
             - condition: state
               entity_id: binary_sensor.bedroom_dev_waterleak_water_leak
               state: 'off'
+
+# From UI
+  - id: '1637875002271'
+    alias: bedroom_motion_night_on
+    description: ''
+    trigger:
+    - type: motion
+      platform: device
+      device_id: b9deccf5e54f2f214b1c9298b258dc47
+      entity_id: binary_sensor.bedroom_dev_motion_bed_left_occupancy
+      domain: binary_sensor
+      id: bedroom_night_motion
+    - type: motion
+      platform: device
+      device_id: 3431cff86262d76dfdf3a4c6a51d2e73
+      entity_id: binary_sensor.bedroom_dev_motion_bed_right_occupancy
+      domain: binary_sensor
+      id: bedroom_night_motion
+    condition:
+    - condition: or
+      conditions:
+      - condition: sun
+        before: sunrise
+      - condition: sun
+        after: sunset
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: light.bedroom_light_ceiling_all
+        state: 'off'
+    - condition: and
+      conditions:
+      - condition: device
+        type: is_off
+        device_id: a33aab9ebd4fc5d18123c44a555b9399
+        entity_id: light.bedroom_light_bed
+        domain: light
+    - condition: state
+      entity_id: input_boolean.bedroom_motion_night
+      state: 'off'
+    action:
+    - type: turn_on
+      device_id: a33aab9ebd4fc5d18123c44a555b9399
+      entity_id: light.bedroom_light_bed
+      domain: light
+      brightness_pct: 5
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.bedroom_motion_night
+    mode: single
+  - id: '1637875864815'
+    alias: bedroom_motion_night_off
+    description: ''
+    trigger:
+    - type: no_motion
+      platform: device
+      device_id: b9deccf5e54f2f214b1c9298b258dc47
+      entity_id: binary_sensor.bedroom_dev_motion_bed_left_occupancy
+      domain: binary_sensor
+      id: bedroom_night_motion
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+    - type: no_motion
+      platform: device
+      device_id: 3431cff86262d76dfdf3a4c6a51d2e73
+      entity_id: binary_sensor.bedroom_dev_motion_bed_right_occupancy
+      domain: binary_sensor
+      id: bedroom_night_motion
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 0
+        milliseconds: 0
+    - platform: state
+      entity_id: light.bedroom_light_ceiling_all
+      id: bedroom_night_motion
+      from: 'off'
+      to: 'on'
+    condition:
+    - condition: or
+      conditions:
+      - condition: sun
+        before: sunrise
+      - condition: sun
+        after: sunset
+    - condition: and
+      conditions:
+      - condition: device
+        type: is_on
+        device_id: a33aab9ebd4fc5d18123c44a555b9399
+        entity_id: light.bedroom_light_bed
+        domain: light
+    - condition: state
+      entity_id: input_boolean.bedroom_motion_night
+      state: 'on'
+    action:
+    - type: turn_off
+      device_id: a33aab9ebd4fc5d18123c44a555b9399
+      entity_id: light.bedroom_light_bed
+      domain: light
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.bedroom_motion_night
+    mode: single
+  - id: '1638466689920'
+    alias: bedroom_motion_night_on_ceiling off
+    description: Turns on bed light when ceiling light is turned off.
+    trigger:
+    - platform: state
+      entity_id: light.bedroom_light_ceiling_all
+      id: bedroom_night_light_turn_off
+      from: 'on'
+      to: 'off'
+    condition:
+    - condition: or
+      conditions:
+      - condition: sun
+        before: sunrise
+      - condition: sun
+        after: sunset
+    - condition: and
+      conditions:
+      - condition: device
+        type: is_off
+        device_id: a33aab9ebd4fc5d18123c44a555b9399
+        entity_id: light.bedroom_light_bed
+        domain: light
+    - condition: state
+      entity_id: input_boolean.bedroom_motion_night
+      state: 'off'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.bedroom_dev_motion_bed_left_occupancy
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.bedroom_dev_motion_bed_right_occupancy
+        state: 'on'
+    action:
+    - type: turn_on
+      device_id: a33aab9ebd4fc5d18123c44a555b9399
+      entity_id: light.bedroom_light_bed
+      domain: light
+      brightness_pct: 5
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.bedroom_motion_night
+    mode: single

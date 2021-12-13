@@ -10,3 +10,4 @@ www
 .ssh
 zigbee2mqtt/log/
 zigbee2mqtt/configuration.yaml
+home-assistant.log*

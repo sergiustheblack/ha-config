@@ -10,6 +10,7 @@
 
   # Временно уходим с балкона
   - alias: balcony_leave_watching_tv
+    id: '1638466689921'
     initial_state: true
     trigger:
       - platform: state
@@ -50,6 +51,7 @@
           duration: "{{ states('input_number.balcony_temp_leave') | int }}"
   # Быстро возвращаемся на балкон      
   - alias: balcony_back_watching_tv
+    id: '1638466689922'
     initial_state: true
     trigger:
       - platform: state

@@ -693,10 +693,15 @@
           message_id: '{{ trigger.event.data.message.message_id }}'
           callback_query_id: '{{ trigger.event.data.id }}'
           chat_id: '{{ trigger.event.data.chat_id }}'
-          message: |
+          message: &vacuum_msg |
             ""
-          inline_keyboard:
-            - "Убрать дом:/clean all"
+          inline_keyboard: &vacuum_keyboard
+            - |
+              {%- if is_state("vacuum.barsik", "docked") %}
+              "Убрать дом:/clean all"
+              {%- else %}
+              "Остановить уборку:/clean stop"
+              {%- endif %}
             - |
               {%- set emoji_room = 
                 {
@@ -714,10 +719,15 @@
               
               {%- set nm = namespace(str = '') %}
               {%- for room, pic in emoji_room.items() %}
-              {%- set nm.str = nm.str ~ ',' ~ pic ~ ":/clean " ~ room %}
+              {%- if room in states.input_select.vacuum_rooms.attributes.options %}
+              {%- set nm.str = nm.str ~ ',' ~ "\U00002705 " ~ pic ~ ":/vacuum_unset " ~ room %}
+              {%- else %}
+              {%- set nm.str = nm.str ~ ',' ~ pic ~ ":/vacuum_set " ~ room %}
+              {%- endif %}
               {%- endfor %}
               {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
               {{ nm.lst | join(", ") }}
+            - "Убрать комнаты:/clean rooms"
             - |
               {%- set power = 
                 {
@@ -750,7 +760,63 @@
               {{ nm.lst | join(", ") }}
             - Назад:/start
           
+  - alias: Vacuum Set
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: "/vacuum_set"
+    action:
+      - service: input_select.set_options
+        target:
+          entity_id: input_select.vacuum_rooms
+        data:
+          options:
+            - "{% if 'kitchen' in states.input_select.vacuum_rooms.attributes.options -%} kitchen {%- endif %}"
+            - "{% if 'bedroom' in states.input_select.vacuum_rooms.attributes.options -%} bedroom {%- endif %}"
+            - "{% if 'bathroom' in states.input_select.vacuum_rooms.attributes.options -%} bathroom {%- endif %}"
+            - "{% if 'corridor' in states.input_select.vacuum_rooms.attributes.options -%} corridor {%- endif %}"
+            - "{% if 'storeroom' in states.input_select.vacuum_rooms.attributes.options -%} storeroom {%- endif %}"
+            - "{{ trigger.event.data['args'] | first }}"
+            
+      - service: telegram_bot.edit_message
+        data:
+          inline_message_id: '{{ trigger.event.data.message.message_id }}'
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          chat_id: '{{ trigger.event.data.chat_id }}'
+          message: *vacuum_msg
+          inline_keyboard: *vacuum_keyboard
+          
+  - alias: Vacuum UnSet
+    trigger:
+      - platform: event
+        event_type: telegram_callback
+        event_data:
+          command: "/vacuum_unset"
+    action:
+      - service: input_select.set_options
+        target:
+          entity_id: input_select.vacuum_rooms
+        data:
+          options:
+            - "{% if 'kitchen' in states.input_select.vacuum_rooms.attributes.options   and trigger.event.data['args'] | first != 'kitchen' -%} kitchen {%- endif %}"
+            - "{% if 'bedroom' in states.input_select.vacuum_rooms.attributes.options   and trigger.event.data['args'] | first != 'bedroom' -%} bedroom {%- endif %}"
+            - "{% if 'bathroom' in states.input_select.vacuum_rooms.attributes.options  and trigger.event.data['args'] | first != 'bathroom' -%} bathroom {%- endif %}"
+            - "{% if 'corridor' in states.input_select.vacuum_rooms.attributes.options  and trigger.event.data['args'] | first != 'corridor' -%} corridor {%- endif %}"
+            - "{% if 'storeroom' in states.input_select.vacuum_rooms.attributes.options and trigger.event.data['args'] | first != 'storeroom' -%} storeroom {%- endif %}"
+            
+      - service: telegram_bot.edit_message
+        data:
+          inline_message_id: '{{ trigger.event.data.message.message_id }}'
+          message_id: '{{ trigger.event.data.message.message_id }}'
+          callback_query_id: '{{ trigger.event.data.id }}'
+          chat_id: '{{ trigger.event.data.chat_id }}'
+          message: *vacuum_msg
+          inline_keyboard: *vacuum_keyboard
+          
   - alias: Vacuum Clean
+    id: '1638466689923'
     trigger:
       - platform: event
         event_type: telegram_callback
@@ -760,15 +826,48 @@
       condition: template
       value_template: '{{ trigger.event.data["args"] | length > 0 }}'
     action:
-      - service: vacuum.send_command
-        target:
-          entity_id: vacuum.barsik
-        data:
-          command: spot_area
-          params:
-            rooms: '{{ states.vacuum.barsik.attributes["room_" ~ trigger.event.data["args"][1]] }}'
-            cleanings: 1
-          
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data["args"] | first == "rooms" }}'
+          sequence:
+            - service: telegram_bot.edit_message
+              data:
+                inline_message_id: '{{ trigger.event.data.message.message_id }}'
+                message_id: '{{ trigger.event.data.message.message_id }}'
+                callback_query_id: '{{ trigger.event.data.id }}'
+                chat_id: '{{ trigger.event.data.chat_id }}'
+                message: *vacuum_msg
+                inline_keyboard: *vacuum_keyboard
+            - service: vacuum.send_command
+              target:
+                entity_id: vacuum.barsik
+              data:
+                command: spot_area
+                params:
+                  rooms: |
+                    {%- set nm = namespace(str = '') %}
+                    {%- for room in states.input_select.vacuum_rooms.attributes.options | unique %}
+                    {%- set nm.str = nm.str ~ ',' ~ states.vacuum.barsik.attributes["room_" ~ room] %}
+                    {%- endfor %}
+                    {%- set nm.lst = nm.str.split(',')[1:] | unique | list  %}
+                    {{ nm.lst | join(",") }}
+                  cleanings: 1
+        - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data["args"] | first == "all" }}'
+          sequence:
+            - service: vacuum.start
+              target:
+                entity_id: vacuum.barsik
+        #- conditions:
+        #  - condition: template
+        #    value_template: '{{ trigger.event.data["args"] | first == "stop" }}'
+        #  sequence:
+        #    - service: vacuum.stop
+        #      target:
+        #        entity_id: vacuum.barsik
+        #      data: null
 # Конец пылесоса
 
   - alias: 'TG TEST'

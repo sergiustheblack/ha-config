@@ -1,0 +1,8 @@
+  vacuum_rooms:
+    name: Rooms selected for cleaning
+    options:
+      - bathroom
+      - storeroom
+      - kitchen
+      - corridor
+      - bedroom
