@@ -1,4 +1,4 @@
-  - platform: generic
-    name: Deebot_live_map
-    still_image_url: "http://192.168.88.100/local/Барсик_liveMap.png"
-    verify_ssl: false
+#  - platform: generic
+#    name: Deebot_live_map
+#    still_image_url: "http://192.168.88.100/local/Барсик_liveMap.png"
+#    verify_ssl: false

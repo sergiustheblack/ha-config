@@ -1,0 +1,50 @@
+- id: '1645038937690'
+  name: Bedroom light mirror MAX
+  entities:
+    light.bedroom_light_mirror_all:
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 255
+      color_temp: 250
+      hs_color:
+      - 26.812
+      - 34.87
+      rgb_color:
+      - 255
+      - 205
+      - 166
+      xy_color:
+      - 0.421
+      - 0.364
+      friendly_name: bedroom_light_mirror_all
+      supported_features: 43
+      state: 'on'
+  icon: mdi:lightbulb-multiple
+- id: '1645039399104'
+  name: Bedroom light mirror Warm
+  entities:
+    light.bedroom_light_mirror_all:
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 31
+      color_temp: 313
+      hs_color:
+      - 27.533
+      - 51.866
+      rgb_color:
+      - 255
+      - 183
+      - 122
+      xy_color:
+      - 0.479
+      - 0.38
+      friendly_name: bedroom_light_mirror_all
+      supported_features: 43
+      state: 'on'
+  icon: mdi:lightbulb-multiple

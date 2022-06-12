@@ -27,12 +27,18 @@
   - alias: balcony_button_light_kitchen
     initial_state: true
     trigger:
-      - platform: state
-        entity_id: sensor.balcony_button_light_action
-        to: 'double' 
-      - platform: state
-        entity_id: sensor.kitchen_button_lighttable_action
-        to: 'right_double'
+      - platform: device
+        domain: mqtt
+        device_id: 1d2f93f51c3700c662dbbb04cae9e4e6
+        type: action
+        subtype: double
+        discovery_id: 0x00158d00044e963e action_double
+      - platform: device
+        domain: mqtt
+        device_id: b7ba51a37616168abe22bf7a6676e2fb
+        type: action
+        subtype: right_double
+        discovery_id: 0x00158d00056a759e action_right_double
     action:
       - service: light.toggle
         entity_id: light.kitchen_light_ceiling_switch
@@ -52,38 +58,52 @@
 #          {% endif %}
 #          {% endfor %}
   - alias: Переключить левый светильник
+    id: '1638466689924'
     initial_state: true
     trigger:
-      - platform: state
-        entity_id: sensor.kitchen_button_lighttable_action
-        to: 'right'
+      - platform: device
+        domain: mqtt
+        device_id: b7ba51a37616168abe22bf7a6676e2fb
+        type: action
+        subtype: right
+        discovery_id: 0x00158d00056a759e action_right
     action:
       - service: light.toggle
         entity_id: light.kitchen_light_table_l1
   - alias: Переключить правый светильник
+    id: '1638466689925'
     initial_state: true
     trigger:
-      - platform: state
-        entity_id: sensor.kitchen_button_lighttable_action
-        to: 'left'
+      - platform: device
+        domain: mqtt
+        device_id: b7ba51a37616168abe22bf7a6676e2fb
+        type: action
+        subtype: left
+        discovery_id: 0x00158d00056a759e action_left
     action:
       - service: light.toggle
         entity_id: light.kitchen_light_table_l2
   - alias: Переключить светильники стола
     initial_state: true
     trigger:
-      - platform: state
-        entity_id: sensor.kitchen_button_lighttable_action
-        to: 'both'
+      - platform: device
+        domain: mqtt
+        device_id: b7ba51a37616168abe22bf7a6676e2fb
+        type: action
+        subtype: both
+        discovery_id: 0x00158d00056a759e action_both
     action:
       - service: light.toggle
         entity_id: light.kitchen_light_table_all
   - alias: Переключить весь свет
     initial_state: true
     trigger:
-      - platform: state
-        entity_id: sensor.kitchen_button_lighttable_action
-        to: 'left_double'
+      - platform: device
+        domain: mqtt
+        device_id: b7ba51a37616168abe22bf7a6676e2fb
+        type: action
+        subtype: left_double
+        discovery_id: 0x00158d00056a759e action_left_double
     action:
       - service: light.toggle
         entity_id: light.kitchen_light_all

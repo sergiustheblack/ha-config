@@ -20,28 +20,21 @@
     scan_interval: 60
     value_template: '{{ value | multiply(0.001) | round(2) }}'
   - platform: command_line
-    command: ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no hass@127.0.0.1 sudo smartctl -A /dev/sda -d sat | grep "Min\/Max" | awk '{print $10}'
+    command: ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no hass@127.0.0.1 sudo smartctl -A /dev/sda -d sat | grep "Temperature_Celsius" | awk '{print $10}'
     name: SSD temperature
     unit_of_measurement: "C"
     scan_interval: 60
-  - platform: command_line
-    command: ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no hass@127.0.0.1 sudo smartctl -A /dev/sda -d sat | grep "Min\/Max" | awk '{print $12}' | tr -d ')' | awk -F '/' '{print $1}'
-    name: SSD min temperature
-    unit_of_measurement: "C"
-    scan_interval: 60
-  - platform: command_line
-    command: ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no hass@127.0.0.1 sudo smartctl -A /dev/sda -d sat | grep "Min\/Max" | awk '{print $12}' | tr -d ')' | awk -F '/' '{print $2}'
-    name: SSD max temperature
-    unit_of_measurement: "C"
-    scan_interval: 60
+#  - platform: command_line
+#    command: ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no hass@127.0.0.1 sudo smartctl -A /dev/sda -d sat | grep "Min\/Max" | awk '{print $12}' | tr -d ')' | awk -F '/' '{print $1}'
+#    name: SSD min temperature
+#    unit_of_measurement: "C"
+#    scan_interval: 60
+#  - platform: command_line
+#    command: ssh -i /config/.ssh/id_rsa -o StrictHostKeyChecking=no hass@127.0.0.1 sudo smartctl -A /dev/sda -d sat | grep "Min\/Max" | awk '{print $12}' | tr -d ')' | awk -F '/' '{print $2}'
+#    name: SSD max temperature
+#    unit_of_measurement: "C"
+#    scan_interval: 60
     
-  - platform: sql
-    db_url: !secret maria_url
-    queries:
-      - name: Maria DB size
-        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
-        column: 'value'
-        unit_of_measurement: MB 
   # bad login count
   - platform: command_line
     name: badlogin

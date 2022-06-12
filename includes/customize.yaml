@@ -7,7 +7,6 @@ sensor.bathroom_relay_linkquality:
   friendly_name: Реле сигнал
 sensor.bathroom_relay_power:
   friendly_name: Реле потребление
-  unit_of_measurement: 'Вт'
 switch.bathroom_relay_switch_l2:
   friendly_name: Реле 2
 sensor.bathroom_relay_temperature:
@@ -20,7 +19,7 @@ light.bathroom_light_mirror:
   icon: mdi:mirror
 light.bathroom_light_ceiling:
   friendly_name: Споты
-sensor.balcony_dev_washer_energy:
+sensor.bathroom_dev_washer_energy:
   friendly_name: Потребление стиралки
 switch.bathroom_dev_washer:
   friendly_name: Стиралка

@@ -26,11 +26,8 @@ http:
 api:
 
 mqtt:
-  broker: core-mosquitto
-  discovery: true
   discovery_prefix: homeassistant
-  username: mqtt
-  password: !secret mqtt
+  sensor: !include includes/mqtt_sensor.yaml
   
 lovelace:
   resources:

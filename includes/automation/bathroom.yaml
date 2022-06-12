@@ -7,6 +7,9 @@
       - platform: state
         entity_id: sensor.bathroom_control_main2_action
         to: button_4_double
+      - platform: state
+        entity_id: sensor.bathroom_control_light_action
+        to: button_6_single
     condition:
       - condition: state
         entity_id: light.bathroom_light_mirror
@@ -24,6 +27,9 @@
       - platform: state
         entity_id: sensor.bathroom_control_main2_action
         to: 'button_3_double'
+      - platform: state
+        entity_id: sensor.bathroom_control_light_action
+        to: button_5_single
     condition:
       - condition: state
         entity_id: light.bathroom_light_mirror
@@ -77,14 +83,14 @@
     initial_state: true
     trigger:
       - platform: state
-        entity_id: sensor.bathroom_control_main_action
-        to: on_left
-      - platform: state
         entity_id: sensor.bathroom_control_main2_action
         to: button_4_single
       - platform: state
         entity_id: sensor.bathroom_light_mirror_action
         to: 'double' 
+      - platform: state
+        entity_id: sensor.bathroom_control_light_action
+        to: button_4_single
     condition:
       - condition: state
         entity_id: fan.bathroom_dev_vent
@@ -97,14 +103,14 @@
     initial_state: true
     trigger:
       - platform: state
-        entity_id: sensor.bathroom_control_main_action
-        to: off_left
-      - platform: state
         entity_id: sensor.bathroom_control_main2_action
         to: button_3_single
       - platform: state
         entity_id: sensor.bathroom_light_mirror_action
-        to: 'double' 
+        to: 'double'
+      - platform: state
+        entity_id: sensor.bathroom_control_light_action
+        to: button_3_single
     condition:
       - condition: state
         entity_id: fan.bathroom_dev_vent
@@ -118,7 +124,7 @@
     trigger:
       - platform: numeric_state
         entity_id: sensor.bathroom_climate_humidity_humidity
-        above: 60
+        above: 70
     condition:
       - condition: state
         entity_id: fan.bathroom_dev_vent
@@ -132,7 +138,7 @@
     trigger:
       - platform: numeric_state
         entity_id: sensor.bathroom_climate_humidity_humidity
-        above: 40
+        above: 65
         for:
           minutes: 5
     condition:
