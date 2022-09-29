@@ -147,7 +147,7 @@
     trigger:
       - platform: numeric_state
         entity_id: sensor.bathroom_climate_humidity_humidity
-        above: 65
+        below: 85
         for:
           minutes: 5
     condition:

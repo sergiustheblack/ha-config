@@ -1,18 +1,13 @@
 '0x00158d00044e963e':
-  friendly_name: '0x00158d00044e963e'
+  friendly_name: balcony_button_light
 '0x00158d000462fde6':
   friendly_name: '0x00158d000462fde6'
 '0x04cf8cdf3c79c0ac':
   friendly_name: '0x04cf8cdf3c79c0ac'
 '0x00047400008c0faa':
   friendly_name: '0x00047400008c0faa'
-'0x04cf8cdf3c8e10ad':
-  friendly_name: '0x04cf8cdf3c8e10ad'
 '0x00124b002252b438':
   friendly_name: '0x00124b002252b438'
-'0x00158d00019d1bcc':
-  friendly_name: '0x00158d00019d1bcc'
-  debounce: 1
 '0x00158d00054eabf1':
   friendly_name: '0x00158d00054eabf1'
 '0x00158d00056a759e':
@@ -31,13 +26,16 @@
 '0x00158d00044ebe7f':
   friendly_name: balcony_window_left
 '0x00047400008bac47':
-  friendly_name: bathroom_control_main
+  friendly_name: bedroom_control_mirror
+  simulated_brightness:
+    delta: 20
+    interval: 100
 '0x00047400002039be':
   friendly_name: bathroom_light_ceiling
 '0x00158d0004651c84':
-  friendly_name: '0x00158d0004651c84'
+  friendly_name: bathroom_light_mirror
 '0x04cf8cdf3c77cc98':
-  friendly_name: bathroom_control_main2
+  friendly_name: bedroom_control_mirror2
 '0x00158d0006722f94':
   friendly_name: bedroom_dev_waterleak
 '0x00158d0005828be1':
@@ -54,3 +52,43 @@
   friendly_name: cloakroom_light_ceiling
 '0x00047400009cf1ed':
   friendly_name: hall_light_ceiling
+'0x04cf8cdf3c8e10ad':
+  friendly_name: '0x04cf8cdf3c8e10ad'
+'0x0017880108645a37':
+  friendly_name: bedroom_dev_motion_bed_left
+'0x0017880109b9dc3e':
+  friendly_name: bedroom_light_bed
+  color_sync: true
+'0x680ae2fffef5a12d':
+  friendly_name: bedroom_light_mirror_3
+  transition: 0
+'0x0000000000000000':
+  friendly_name: '0x0000000000000000'
+'0x588e81fffe016e0e':
+  friendly_name: bedroom_light_mirror_1
+'0x680ae2fffec405b1':
+  friendly_name: bedroom_light_mirror_2
+'0x588e81fffe01632f':
+  friendly_name: bedroom_light_mirror_6
+'0x588e81fffe017e89':
+  friendly_name: bedroom_light_mirror_5
+'0x680ae2fffecfdb89':
+  friendly_name: bedroom_light_mirror_7
+'0x680ae2fffef467ad':
+  friendly_name: bedroom_light_mirror_4
+'0x680ae2fffee987b0':
+  friendly_name: bedroom_light_mirror_9
+'0x680ae2fffed26301':
+  friendly_name: bedroom_light_mirror_8
+'0x588e81fffe017611':
+  friendly_name: bedroom_light_mirror_10
+'0x00158d00044ebd68':
+  friendly_name: kitchen_control_lightceiling
+'0x54ef4410003a67ed':
+  friendly_name: bathroom_control_light
+'0x54ef4410004ee68b':
+  friendly_name: '0x54ef4410004ee68b'
+'0x0017880108645a9b':
+  friendly_name: bedroom_dev_motion_bed_right
+'0x00158d00019d1bcc':
+  friendly_name: balcony_climate_humidity

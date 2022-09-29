@@ -50,5 +50,6 @@
   "frontend": {
     "port": 8099
   },
-  "experimental": {}
+  "experimental": {},
+  "availability": false
 }

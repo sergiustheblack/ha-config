@@ -2,3 +2,16 @@
   friendly_name: test_light_bathroom
   devices:
     - 0x00158d000462fde6/2
+'2':
+  friendly_name: bedroom_light_mirror_all
+  devices:
+    - 0x588e81fffe016e0e/1
+    - 0x680ae2fffec405b1/1
+    - 0x680ae2fffef5a12d/1
+    - 0x680ae2fffef467ad/1
+    - 0x588e81fffe017e89/1
+    - 0x588e81fffe01632f/1
+    - 0x680ae2fffecfdb89/1
+    - 0x680ae2fffed26301/1
+    - 0x588e81fffe017611/1
+    - 0x680ae2fffee987b0/1
