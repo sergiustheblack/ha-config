@@ -7,7 +7,7 @@
       - service: notify.notify
         data:
           title: "Системное уведомление"
-          message: "{{ '\ud83c\udfc1' }} Cервер запущен в {{ states('sensor.time_date') }}."
+          message: "Cервер запущен в {{ states('sensor.time_date') }}."
       - service: notify.telegram_tech
         data:
           title: "Системное уведомление"
@@ -22,7 +22,7 @@
       - service: notify.telegram_tech
         data:
           title: Home Assistant
-          message: "{{ '\u2757\ufe0f' }} Сервер остановлен в {{ states('sensor.time_date') }}"
+          message: "Сервер остановлен в {{ states('sensor.time_date') }}"
 
   - alias: 'Update Available Notifications' #Уведомление о наличии обновлений
     initial_state: 'on'
@@ -40,12 +40,12 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-      above: 60
+      above: 70
     action:
       service: notify.telegram_tech
       data:
         title: Системное уведомление
-        message: 'Температура CPU {{ sensor.cpu_temperature }}'
+        message: "Температура CPU {{ states('sensor.cpu_temperature') }}"
   - alias: SSD temperature
     initial_state: 'on'
     trigger:
@@ -56,7 +56,7 @@
       service: notify.telegram_tech
       data:
         title: Системное уведомление
-        message: 'Температура SSD {{ sensor.ssd_temperature }}'
+        message: "Температура SSD {{ states('sensor.ssd_temperature') }}"
         
   - alias: Login Failure   #Уведомление о неверном вводе логина и пароля
     initial_state: 'on'

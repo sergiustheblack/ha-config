@@ -109,14 +109,15 @@
           chat_id: '{{ trigger.event.data.chat_id }}'
           inline_keyboard: 
             - |
-              {%- set selected_room = (trigger.event.data["args"] | first).split('_') | first %}
+              {%- set selected_room = trigger.event.data["args"] | first %}
+              {%- set deny_types = ["memory", "indication", "ambilight"] %}
               {%- set nm = namespace(str="") %}
               {%- for entity in states.switch | list + states.light | list %}
               {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
               {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
               {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
               {%- set device = entity.entity_id.split(".")[1] %}
-              {%- if room == selected_room -%}
+              {%- if room == selected_room and type is not match('\d+') and type not in deny_types -%}
               {%- if entity.domain == 'switch' and dom != 'light' -%}
               {%- set nm.str = nm.str ~ "," ~  entity.attributes.get('friendly_name') | replace("_","\_") ~ ":/switchtoggle " ~ device ~ " " ~ room %}
               {%- elif entity.domain == 'light' -%}
@@ -642,13 +643,14 @@
           inline_keyboard:
             - |
               {%- set selected_room = trigger.event.data["args"] | first %}
+              {%- set deny_types = ["memory", "indication", "ambilight"] %}
               {%- set nm = namespace(str="") %}
               {%- for entity in states.switch | list + states.light | list %}
               {%- set room = entity.entity_id.split(".")[1].split("_")[0] %}
               {%- set dom = entity.entity_id.split(".")[1].split("_")[1] %}
               {%- set type = entity.entity_id.split(".")[1].split("_")[-1] %}
               {%- set device = entity.entity_id.split(".")[1] %}
-              {%- if room == selected_room -%}
+              {%- if room == selected_room and type is not match('\d+') and type not in deny_types -%}
               {%- if entity.domain == 'switch' and dom != 'light' -%}
               {%- set nm.str = nm.str ~ "," ~  entity.attributes.get('friendly_name') | replace("_","\_") ~ ":/switchtoggle " ~ device ~ " " ~ room %}
               {%- elif entity.domain == 'light' -%}
@@ -666,7 +668,12 @@
         event_data:
           command: "/speedtest"
     action:
-      - service: speedtestdotnet.speedtest
+      - service:  homeassistant.update_entity
+        target:
+          entity_id:
+            - sensor.speedtest_download
+            - sensor.speedtest_upload
+            - sensor.speedtest_ping
       - service: telegram_bot.edit_message
         data:
           inline_message_id: '{{ trigger.event.data.message.message_id }}'

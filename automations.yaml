@@ -20,7 +20,12 @@
     at: 09:00
   condition: []
   action:
-  - service: speedtestdotnet.speedtest
+    - service:  homeassistant.update_entity
+      target:
+        entity_id:
+          - sensor.speedtest_download
+          - sensor.speedtest_upload
+          - sensor.speedtest_ping
   mode: single
 - id: '1638656723801'
   alias: Report internet speed
