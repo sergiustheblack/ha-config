@@ -59,18 +59,19 @@
         message: "Температура SSD {{ states('sensor.ssd_temperature') }}"
         
   - alias: Login Failure   #Уведомление о неверном вводе логина и пароля
+    id: '1686410913407'
     initial_state: 'on'
     trigger:
-      - platform: state
-        entity_id: persistent_notification.http_login
-    condition:
-      - condition: template
-        value_template: "{{ trigger.to_state.state != off }}"
+    - platform: persistent_notification
+      update_type:
+      - added
+      - updated
+      notification_id: http-login
     action:
       - service: notify.telegram_tech
         data:
           title: Системное уведомление
-          message: "Warning - Не удачная попытка подлючения. Не верно введен пароль. Всего попыток зафиксировано: {{ states('sensor.badlogin') }} {{ states.persistent_notification.http_login.attributes.message }}"
+          message: "Warning - Не удачная попытка подлючения. Не верно введен пароль. Всего попыток зафиксировано: {{ states('binary_sensor.badlogin') }} {{ trigger.notification.message }}"
       - service: persistent_notification.dismiss
         data:
           notification_id: http_login

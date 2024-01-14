@@ -211,3 +211,19 @@
       target:
         entity_id: input_boolean.bedroom_motion_night
     mode: single
+
+  - id: '1637875864817'
+    alias: bedroom_motion_night_reset
+    description: ''
+    trigger:
+    - platform: sun
+      event: sunrise
+    condition:
+    - condition: state
+      entity_id: input_boolean.bedroom_motion_night
+      state: 'on'
+    action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.bedroom_motion_night
+    mode: single

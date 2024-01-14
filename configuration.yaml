@@ -11,7 +11,7 @@ homeassistant:
   time_zone: Europe/Moscow
   customize: !include includes/customize.yaml
   packages: !include_dir_merge_named includes/packages
-  legacy_templates: false
+  country: RU
 
 # Text to speech
 tts:
@@ -26,7 +26,6 @@ http:
 api:
 
 mqtt:
-  discovery_prefix: homeassistant
   sensor: !include includes/mqtt_sensor.yaml
   
 lovelace:
@@ -34,10 +33,10 @@ lovelace:
     - url: /hacsfiles/lovelace-xiaomi-vacuum-card/xiaomi-vacuum-card.js
       type: module
 
-weather:
-  - platform: yandex_weather
-    api_key: !secret yandex_api_key
-    scan_interval: 3600
+#weather:
+#  - platform: yandex_weather
+#    api_key: !secret yandex_api_key
+#    scan_interval: 3600
 
 telegram_bot:
   - platform: polling
@@ -84,6 +83,59 @@ notify:
 bessarabov:
   token: !secret bessarabov_token
 
+lkcomu_interrao:
+
+  # Тип выбранного ЛК
+  # Значение по умолчанию: moscow
+  # Перечень возможных значений:
+  # - altai (ЛК Алтай (АО «АлтайЭнергосбыт»))
+  # - bashkortostan (ЛКК ЭСКБ (Башэлектросбыт))
+  # - moscow (ЕЛК ЖКХ (АО «Мосэнергосбыт», МосОблЕИРЦ, ПАО «Россети Московский регион»))
+  # - oryol (ЛКК Орел (ООО «Орловский энергосбыт»))
+  # - saratov (ЛК Саратов (ПАО «Саратовэнерго»))
+  # - sevesk (ЕЛК Вологда (Северная сбытовая компания))
+  # - tambov (ЛК ТЭСК (Тамбовская энергосбытовая компания))
+  # - tomsk (ЕЛК Томск (Томскэнергосбыт / Томск РТС))
+  # - volga (ЛКК ЭСВ (Энергосбыт Волга))
+  type: moscow
+
+  # Имя пользователя
+  # Обязательный параметр
+  username: "..."
+
+  # Пароль
+  # Обязательный параметр
+  password: "..."
+
+  # Конфигурация по умолчанию для лицевых счетов
+  # Необязательный параметр
+  #  # Данная конфигурация применяется, если отсутствует  # конкретизация, указанная в разделе `accounts`.
+  default:
+
+    # Получать ли ссылки на логотипы
+    # Значение по умолчанию: истина (true)
+    logos: true
+
+    # Добавлять ли объект(-ы): Информация о лицевом счёте
+    # Значение по умолчанию: истина (true)
+    accounts: true
+
+    # Добавлять ли объект(-ы): Счётчик коммунальных услуг
+    # Значение по умолчанию: истина (true)
+    meters: true
+
+    # Добавлять ли объект(-ы): Последний зарегистрированный платёж
+    # Значение по умолчанию: истина (true)
+    last_payment: true
+
+    # Добавлять ли объект(-ы): Последняя выпущенная квитанция
+    # Значение по умолчанию: истина (true)
+    last_invoice: true
+
+  # Настройки для отдельных лицевых счетов
+  # Необязательный параметр
+  #accounts:
+  
 # ext files
 timer: !include includes/timer.yaml
 input_boolean: !include includes/input_boolean.yaml
@@ -103,3 +155,6 @@ automation: !include_dir_merge_list includes/automation
 camera: !include_dir_merge_list includes/cameras
 light: !include_dir_merge_list includes/light
 binary_sensor: !include_dir_merge_list includes/binary_sensor
+command_line: !include_dir_merge_list includes/command_line
+frontend:
+  themes: !include_dir_merge_named themes

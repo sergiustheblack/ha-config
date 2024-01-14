@@ -59,7 +59,6 @@
                       name: Input Voltage
                     - entity: sensor.ups_time_left
                       name: Battery Runtime
-                  theme: default
                   title: APC UPS STATUS 
                   
             - type: horizontal-stack

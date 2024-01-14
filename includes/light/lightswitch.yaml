@@ -9,10 +9,10 @@
     entity_id: switch.balcony_light_ceiling
   - platform: switch
     name: bathroom_light_mirror
-    entity_id: switch.bathroom_light_mirror   
+    entity_id: switch.bathroom_light_l1
   - platform: switch
     name: bathroom_light_ceiling
-    entity_id: switch.bathroom_light_ceiling
+    entity_id: switch.bathroom_light_l2
   - platform: switch
     name: kitchen_light_table_l1
     entity_id: switch.kitchen_light_table_l1

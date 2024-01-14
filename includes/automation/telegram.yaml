@@ -473,14 +473,14 @@
             
             {%- set sensor = states.weather.yandex_weather.attributes %}
             {%- set forecast = sensor.forecast %}
-            Прогноз собран *{{ ((as_timestamp(now()) - as_timestamp(sensor.observation_time)) / 3600)  | round(0,'ceiling') }} часов назад.*
-            {{ to_emoji(sensor["weather_condition"]) }}На улице {{ sensor["weather_condition"] | lower }}.
+            Прогноз собран *{{ ((as_timestamp(now()) - as_timestamp(states('sensor.yandex_weather_data_update_time'))) / 3600)  | round(0,'ceiling') }} часов назад.*
+            {{ to_emoji(states('sensor.yandex_weather_condition_yandex')) }}На улице {{ states('sensor.yandex_weather_condition_yandex') | lower }}.
             Температура воздуха {{ sensor["temperature"] }}˚C, ощущается как {{ sensor["feels_like"] }}˚C.
             *Прогноз:*
             {%- for f in forecast %}
             
-            {{ f.datetime.strftime('%A %B %d') }} {{ to_ru_daytime(f.part_of_day) }}:
-            {{ to_emoji(f["weather_condition"]) }}{{ f["weather_condition"]}}.
+            {{ as_datetime(f.datetime).strftime('%A %B %d') }}:
+            {{ to_emoji(f["condition"]) }}{{ f["condition"]}}.
             Температура воздуха {{ f.temperature }}˚C, ощущается как {{ f.feels_like }},
             Минимум {{ f.templow }}˚C.
             Осадки (мм): {{ f.precipitation }}
